@@ -1,0 +1,260 @@
+---
+title: "coffee-and-coding-styling-r-code"
+format: 
+  revealjs:
+    theme: dark
+    code-line-numbers: false
+    # theme: blood
+execute: 
+  echo: true
+---
+
+# Planning (delete later)
+
+## Ideas:
+
+-   Maybe start with a badly formatted script, and go through
+    refactoring it by way of example.
+-   Ask in the chat how people would do certain things, and maybe why.
+    Or give examples and ask which they prefer.
+
+## Structure:
+
+1.  What is styling, and why is it important?
+    -   Examples (e.g. code formatting, naming things, design, comments,
+        set-up etc)
+    -   Analogies, e.g. with grammar. Makes code easier to read (for
+        others and future you) AND write.
+    -   Lots of these tips you just pick up, but it's actually worth
+        learning them. I spent the first year of coding trying to make
+        my code clear and flip-flopping between different styles. But
+        ideally, you don't want to change the way you style things -
+        consistently using a set of weird conventions is better than
+        inconsistently using good ones. But, learning good conventions
+        and using them consistently is best.
+2.  Some specific styling tips
+    -   Indentation / line breaks
+        -   Some explanation of what a code-block is. Use
+            `if`-statements.
+    -   Naming things
+        -   Don't abbreviate except in exceptional cases
+        -   Begin objects with a common prefix when it makes sense
+        -   `lower_snake_case` for object names. Exceptions? Personally,
+            no.
+        -   `Title_Snake_Case` for column names
+        -   `camelCase`/`PascalCase` should almost never be used - only
+            exception is for some object-oriented programming. If you've
+            used the {DBI} package you'll notice a lot of these
+            functions are `camelCase`.
+    -   Comments
+        -   Explain the *why*, not that *what*
+        -   Begin with a space, use sentence case
+        -   Favour infrequent, detailed comments over frequent ones
+            which don't add much
+    -   Misc:
+        -   `<-`, not `=` for assignment
+
+        -   Always space stuff out. E.g. `1/(a+b+c)` is worse than
+            `1 / (a + b + c)`
+
+        -   Don't inline curly braces
+3.  Some tools to help with styling (easy to hard)
+    -   RStudio: auto-indent, auto-rename, multiline cursor, reflow
+        comment, ctrl + f, ctrl + shift + f, rename in scope
+
+    -   {janitor} for cleaning column names
+
+    -   {styler} for restyling existing code
+
+    -   {lintr} for checking your own code
+
+# 01. What is code styling?
+
+## 'Styling' covers...
+
+::: incremental
+-   Code/project structure (e.g. `01-modelling.R` -\> `02-plots.R` -\>
+    `03-export.R` )
+
+-   Code formatting
+
+    -   Naming things (variables, columns, functions etc)
+    -   Indentation/line breaks/spacing
+    -   Stuff specific to R, e.g. `<-` vs `=`
+
+-   Wider *principles* like...
+
+    -   What does a good comment say?
+    -   What does a bad comment say?
+:::
+
+------------------------------------------------------------------------
+
+::: {.absolute top="200"}
+> Good coding style is like correct punctuation: you can manage without
+> it, butitsuremakesthingseasiertoread
+
+\-*Introduction to the [Tidyverse Style
+Guide](https://style.tidyverse.org/)*
+:::
+
+## Some specific benefits
+
+::: incremental
+-   Styling makes **writing** code easier
+
+-   Styling makes **reading** code easier (especially for future you!)
+
+-   Styling makes it easier to **avoid issues/bugs**
+:::
+
+# 02. Some Specific Styling Tips
+
+## Naming things
+
+::: {style="font-size:70%"}
+::: incremental
+```{r}
+#| code-line-numbers: "|1-2"
+
+# snake_case
+iris_summary <- summary(iris)
+
+# Title_Snake_Case
+Iris_Summary <- summary(iris)
+
+# camelCase
+irisSummary <- summary(iris)
+
+# PascalCase
+IrisSummary <- summary(iris)
+
+# SCREAMING_SNAKE_CASE
+IRIS_SUMMARY <- summary(iris)
+```
+
+-   Consistency should be prioritised above all else, but...
+-   `lower_snake_case` should be preferred in most cases
+-   `Title_Snake_Case` works well for column names
+-   You might see `camelCase` in other packages, but you shouldn't use
+    it unless you're doing serious object-oriented programming
+:::
+:::
+
+::: notes
+-   Exceptions to the `lower_snake_case` rule? Personally, no. I find,
+    even with acronyms etc, things are much simpler if you follow this
+    rule religiously.
+:::
+
+## ...But *what* to name things?
+
+::: {style="font-size:70%"}
+-   Keep names as short as you can *while still being descriptive.*
+    Prioritise being descriptive!
+-   Only use abbreviations in exceptional cases
+-   Don't use the name to signal the *type* of the object
+
+::: columns
+::: {.column width="50%"}
+### Bad
+
+```{r}
+#| eval: false
+
+table_totalcost <- costs %>% 
+  group_by(Category) %>% 
+  summarise(Cost = sum(Cost))
+
+model_for_use_later_on <- lm(Cost ~ Time, data = costs)
+
+read_data_func <- function(path) {
+  readr::read_csv(
+    path, 
+    id = "filepath", 
+    na = "unknown"
+  )
+}
+```
+:::
+
+::: {.column width="50%"}
+### Good
+
+```{r}
+#| eval: false
+
+cost_totals <- costs %>% 
+  group_by(Category) %>% 
+  summarise(Cost = sum(Cost))
+
+cost_model <- lm(Cost ~ Time, data = costs)
+
+read_data <- function(path) {
+  readr::read_csv(
+    path, 
+    id = "filepath",
+    na = "unknown"
+  )
+}
+```
+:::
+:::
+:::
+
+## Indentation
+
+::: {style="font-size:70%"}
+-   *Question:* Why indent?
+-   *Answer:* It makes it much easier to infer context
+
+::: columns
+::: {.column width="50%"}
+### Bad
+
+```{r}
+#| eval: false
+
+  iris %>% 
+ mutate(
+Sepal.Area = Sepal.Width * Sepal.Length,
+  Petal.Area = Petal.Width * Petal.Length
+  ) %>% 
+group_by(
+Species
+  ) %>% 
+    summarise(
+Petal.Area = mean(Petal.Area),
+   Petal.Area = mean(Petal.Area)
+)
+```
+:::
+
+::: {.column width="50%"}
+### Good
+
+```{r}
+#| eval: false
+
+iris %>% 
+  mutate(
+    Sepal.Area = Sepal.Width * Sepal.Length,
+    Petal.Area = Petal.Width * Petal.Length
+  ) %>% 
+  group_by(
+    Species
+  ) %>% 
+  summarise(
+    Petal.Area = mean(Petal.Area),
+    Petal.Area = mean(Petal.Area)
+  )
+```
+:::
+:::
+:::
+
+## How much to indent? 
+
+-   Increase indentation whenever
+-   Whenever you increase indentation, \*\*do it by exactly 2 spaces\*\*
+-   
