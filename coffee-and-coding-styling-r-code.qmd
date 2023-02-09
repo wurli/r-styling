@@ -1,78 +1,123 @@
 ---
-title: "coffee-and-coding-styling-r-code"
+title: "Styling R Code"
 format: 
   revealjs:
     theme: dark
     code-line-numbers: false
-    # theme: blood
 execute: 
   echo: true
+highlight-style: arrow
 ---
 
-# Planning (delete later)
+<!-- # Planning (delete later) -->
 
-## Ideas:
+<!-- ## Ideas: -->
 
--   Maybe start with a badly formatted script, and go through
-    refactoring it by way of example.
--   Ask in the chat how people would do certain things, and maybe why.
-    Or give examples and ask which they prefer.
+<!-- -   Maybe start with a badly formatted script, and go through -->
 
-## Structure:
+<!--     refactoring it by way of example. -->
 
-1.  What is styling, and why is it important?
-    -   Examples (e.g. code formatting, naming things, design, comments,
-        set-up etc)
-    -   Analogies, e.g. with grammar. Makes code easier to read (for
-        others and future you) AND write.
-    -   Lots of these tips you just pick up, but it's actually worth
-        learning them. I spent the first year of coding trying to make
-        my code clear and flip-flopping between different styles. But
-        ideally, you don't want to change the way you style things -
-        consistently using a set of weird conventions is better than
-        inconsistently using good ones. But, learning good conventions
-        and using them consistently is best.
-2.  Some specific styling tips
-    -   Indentation / line breaks
-        -   Some explanation of what a code-block is. Use
-            `if`-statements.
-    -   Naming things
-        -   Don't abbreviate except in exceptional cases
-        -   Begin objects with a common prefix when it makes sense
-        -   `lower_snake_case` for object names. Exceptions? Personally,
-            no.
-        -   `Title_Snake_Case` for column names
-        -   `camelCase`/`PascalCase` should almost never be used - only
-            exception is for some object-oriented programming. If you've
-            used the {DBI} package you'll notice a lot of these
-            functions are `camelCase`.
-    -   Comments
-        -   Explain the *why*, not that *what*
-        -   Begin with a space, use sentence case
-        -   Favour infrequent, detailed comments over frequent ones
-            which don't add much
-    -   Misc:
-        -   `<-`, not `=` for assignment
+<!-- -   Ask in the chat how people would do certain things, and maybe why. -->
 
-        -   Always space stuff out. E.g. `1/(a+b+c)` is worse than
-            `1 / (a + b + c)`
+<!--     Or give examples and ask which they prefer. -->
 
-        -   Don't inline curly braces
-3.  Some tools to help with styling (easy to hard)
-    -   RStudio: auto-indent, auto-rename, multiline cursor, reflow
-        comment, ctrl + f, ctrl + shift + f, rename in scope
+<!-- ## Structure: -->
 
-    -   {janitor} for cleaning column names
+<!-- 1.  What is styling, and why is it important? -->
 
-    -   {styler} for restyling existing code
+<!--     -   Examples (e.g. code formatting, naming things, design, comments, -->
 
-    -   {lintr} for checking your own code
+<!--         set-up etc) -->
+
+<!--     -   Analogies, e.g. with grammar. Makes code easier to read (for -->
+
+<!--         others and future you) AND write. -->
+
+<!--     -   Lots of these tips you just pick up, but it's actually worth -->
+
+<!--         learning them. I spent the first year of coding trying to make -->
+
+<!--         my code clear and flip-flopping between different styles. But -->
+
+<!--         ideally, you don't want to change the way you style things - -->
+
+<!--         consistently using a set of weird conventions is better than -->
+
+<!--         inconsistently using good ones. But, learning good conventions -->
+
+<!--         and using them consistently is best. -->
+
+<!-- 2.  Some specific styling tips -->
+
+<!--     -   Indentation / line breaks -->
+
+<!--         -   Some explanation of what a code-block is. Use -->
+
+<!--             `if`-statements. -->
+
+<!--     -   Naming things -->
+
+<!--         -   Don't abbreviate except in exceptional cases -->
+
+<!--         -   Begin objects with a common prefix when it makes sense -->
+
+<!--         -   `lower_snake_case` for object names. Exceptions? Personally, -->
+
+<!--             no. -->
+
+<!--         -   `Title_Snake_Case` for column names -->
+
+<!--         -   `camelCase`/`PascalCase` should almost never be used - only -->
+
+<!--             exception is for some object-oriented programming. If you've -->
+
+<!--             used the {DBI} package you'll notice a lot of these -->
+
+<!--             functions are `camelCase`. -->
+
+<!--         -   File names? -->
+
+<!--     -   Comments -->
+
+<!--         -   Explain the *why*, not that *what* -->
+
+<!--         -   Begin with a space, use sentence case -->
+
+<!--         -   Favour infrequent, detailed comments over frequent ones -->
+
+<!--             which don't add much -->
+
+<!--     -   Misc: -->
+
+<!--         -   `<-`, not `=` or `->` for assignment -->
+
+<!--         -   Always space stuff out. E.g. `1/(a+b+c)` is worse than -->
+
+<!--             `1 / (a + b + c)`. -->
+
+<!--         -   Don't inline curly braces -->
+
+<!--         -    -->
+
+<!-- 3.  Some tools to help with styling (easy to hard) -->
+
+<!--     -   RStudio: auto-indent, auto-rename, multiline cursor, reflow -->
+
+<!--         comment, ctrl + f, ctrl + shift + f, rename in scope -->
+
+<!--     -   {janitor} for cleaning column names -->
+
+<!--     -   {styler} for restyling existing code -->
+
+<!--     -   {lintr} for checking your own code -->
+
+<!--     -   {codegrip} for reshaping code -->
 
 # 01. What is code styling?
 
 ## 'Styling' covers...
 
-::: incremental
+::: {.incremental style="font-size:80%"}
 -   Code/project structure (e.g. `01-modelling.R` -\> `02-plots.R` -\>
     `03-export.R` )
 
@@ -85,7 +130,10 @@ execute:
 -   Wider *principles* like...
 
     -   What does a good comment say?
-    -   What does a bad comment say?
+    -   What is good code design?
+
+-   Styling is about making your work easy to understand without
+    changing its function
 :::
 
 ------------------------------------------------------------------------
@@ -100,17 +148,89 @@ Guide](https://style.tidyverse.org/)*
 
 ## Some specific benefits
 
-::: incremental
--   Styling makes **writing** code easier
+::: {.incremental style="font-size:70%}
+-   Styling makes *writing* code easier (less decisions to make)
 
--   Styling makes **reading** code easier (especially for future you!)
+-   Styling makes *reading* code easier
 
--   Styling makes it easier to **avoid issues/bugs**
+-   Styling makes it easier to *avoid bugs*
+
+::: {.columns}
+
+::: {.fragment .column width=50%}
+![Without styling](cat-crying.gif){height=200}
 :::
 
-# 02. Some Specific Styling Tips
+::: {.fragment .column width=50%}
+![With styling](cat-typing.gif){height=200}
+:::
+
+:::
+
+:::
+
+# 02. Some specific styling tips
 
 ## Naming things
+
+::: {style="font-size:70%"}
+-   Keep names as short as you can *while still being descriptive*.
+    Prioritise being descriptive!
+-   Only use abbreviations in special cases, e.g. acronyms
+-   Don't use the name to signal the *type* of the object
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+#| filename: Bad
+
+table_totalcost <- costs %>% 
+  group_by(Category) %>% 
+  summarise(Cost = sum(Cost))
+
+model_for_use_later_on <- lm(Cost ~ Time, data = costs)
+
+read_data_func <- function(path) {
+  readr::read_csv(
+    path, 
+    id = "filepath", 
+    na = "unknown"
+  )
+}
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+#| filename: Good
+
+cost_totals <- costs %>% 
+  group_by(Category) %>% 
+  summarise(Cost = sum(Cost))
+
+cost_model <- lm(Cost ~ Time, data = costs)
+
+read_data <- function(path) {
+  readr::read_csv(
+    path, 
+    id = "filepath",
+    na = "unknown"
+  )
+}
+```
+:::
+:::
+
+-   Names for things like dataframes, vectors, values etc should be
+    noun-like, e.g. `costs`, `costs_summary`, `costs_uplift_factor` etc
+
+-   Names for functions should be verb-like, e.g. `filter()`,
+    `standardise_names()` , `extract_coefficients()` etc
+:::
+
+## Name *case*
 
 ::: {style="font-size:70%"}
 ::: incremental
@@ -147,114 +267,324 @@ IRIS_SUMMARY <- summary(iris)
     rule religiously.
 :::
 
-## ...But *what* to name things?
+## Syntactic names
 
-::: {style="font-size:70%"}
--   Keep names as short as you can *while still being descriptive.*
-    Prioritise being descriptive!
--   Only use abbreviations in exceptional cases
--   Don't use the name to signal the *type* of the object
+::: {.incremental style="font-size:70%"}
+R has rules for names:
 
-::: columns
-::: {.column width="50%"}
-### Bad
+-   They must only include letters and numbers, and must start with a
+    letter
 
+-   Other names must be surrounded by backticks:
+
+::: fragment
 ```{r}
 #| eval: false
+#| code-line-numbers: "1-2|4-5|7-8|10-11|1-11"
 
-table_totalcost <- costs %>% 
-  group_by(Category) %>% 
-  summarise(Cost = sum(Cost))
+# Good ('syntactic')
+iris_proportions <- mutate(iris, across(1:4, ~ . / sum(.)))
 
-model_for_use_later_on <- lm(Cost ~ Time, data = costs)
+# Bad: starts with a number
+`01_iris_proportions` <- mutate(iris, across(1:4, ~ . / sum(.)))
 
-read_data_func <- function(path) {
-  readr::read_csv(
-    path, 
-    id = "filepath", 
-    na = "unknown"
-  )
-}
+# Bad: contains a non-alphanumeric character
+`iris_%s` <- mutate(iris, across(1:4, ~ . / sum(.)))
+
+# Bad: contains a space
+`iris proportions` <- mutate(iris, across(1:4, ~ . / sum(.)))
 ```
 :::
 
-::: {.column width="50%"}
-### Good
-
-```{r}
-#| eval: false
-
-cost_totals <- costs %>% 
-  group_by(Category) %>% 
-  summarise(Cost = sum(Cost))
-
-cost_model <- lm(Cost ~ Time, data = costs)
-
-read_data <- function(path) {
-  readr::read_csv(
-    path, 
-    id = "filepath",
-    na = "unknown"
-  )
-}
-```
-:::
-:::
+-   When your data has non-syntactic column names, **clean these up
+    ASAP!**
+    
+-   While names like `my.data` are allowed, avoid this naming style. Use 
+    `my_data` instead.
 :::
 
 ## Indentation
 
-::: {style="font-size:70%"}
--   *Question:* Why indent?
--   *Answer:* It makes it much easier to infer context
-
+::: {.incremental style="font-size:70%"}
 ::: columns
-::: {.column width="50%"}
-### Bad
+::: {.column width="40%"}
+-   *Question:* Why indent?
+-   *Answer:* Indentation shows **code structure** at a glance
+-   Whenever you increase indentation, **do it by exactly 2 spaces**
+-   This usually means that **all function arguments should have their
+    own line**
+:::
 
+::: {.column width="60%"}
+::: fragment
 ```{r}
 #| eval: false
-
-  iris %>% 
- mutate(
-Sepal.Area = Sepal.Width * Sepal.Length,
-  Petal.Area = Petal.Width * Petal.Length
-  ) %>% 
-group_by(
-Species
-  ) %>% 
-    summarise(
-Petal.Area = mean(Petal.Area),
-   Petal.Area = mean(Petal.Area)
-)
+#| filename: "Bad"
+ iris %>% 
+ dplyr::mutate(Sepal.Area = Sepal.Width * Sepal.Length,
+   Petal.Area = Petal.Width * Petal.Length) %>% 
+  ggplot2::ggplot(aes(x = Sepal.Area, 
+y = Petal.Area, colour = Species)) +
+  ggplot2::geom_point()
 ```
 :::
 
-::: {.column width="50%"}
-### Good
+::: {style="font-size:5%"}
+\
+:::
 
+::: fragment
 ```{r}
 #| eval: false
-
+#| filename: "Better"
 iris %>% 
-  mutate(
+  dplyr::mutate(Sepal.Area = Sepal.Width * Sepal.Length,
+                Petal.Area = Petal.Width * Petal.Length) %>% 
+  ggplot2::ggplot(aes(x = Sepal.Area, 
+                      y = Petal.Area, 
+                      colour = Species)) +
+  ggplot2::geom_point()
+```
+:::
+
+::: {style="font-size:5%"}
+\
+:::
+
+::: fragment
+```{r}
+#| eval: false
+#| filename: "Best"
+iris %>% 
+  dplyr::mutate(
     Sepal.Area = Sepal.Width * Sepal.Length,
     Petal.Area = Petal.Width * Petal.Length
   ) %>% 
-  group_by(
-    Species
-  ) %>% 
-  summarise(
-    Petal.Area = mean(Petal.Area),
-    Petal.Area = mean(Petal.Area)
+  ggplot2::ggplot(aes(
+    x = Sepal.Area, 
+    y = Petal.Area, 
+    colour = Species
+  )) +
+  ggplot2::geom_point()
+```
+:::
+:::
+:::
+:::
+
+## Comments: what should they say?
+
+::: {.incremental style="font-size:70%"}
+::: columns
+::: {.column width="40%"}
+-   **Question:** How much should you comment?
+-   **Answer:** As much as needed, *but no more*
+
+::: fragment
+If a comment is needed, it should explain the *why*, not the
+*what*/*how* (if *what* your code does isn't clear, you should probably
+rewrite it).
+:::
+:::
+
+::: {.column width="60%"}
+::: fragment
+```{r}
+#| eval: false
+#| filename: "Bad"
+#| code-line-numbers: "|5"
+
+plot_data <- mtcars %>% 
+  rownames_to_column("car") %>% 
+  as_tibble() %>% 
+  
+  # Reorder car levels by values of mpg
+  mutate(
+    car = fct_reorder(car, mpg)
+  )
+```
+:::
+
+::: {style="font-size:5%"}
+\
+:::
+
+::: fragment
+```{r}
+#| eval: false
+#| filename: "Good"
+#| code-line-numbers: "|5"
+
+plot_data <- mtcars %>% 
+  rownames_to_column("car") %>% 
+  as_tibble() %>% 
+  
+  # Order cars by efficiency (mpg) for plotting later
+  mutate(
+    car = fct_reorder(car, mpg)
   )
 ```
 :::
 :::
 :::
+:::
 
-## How much to indent? 
+## Comments: maximising clarity
 
--   Increase indentation whenever
--   Whenever you increase indentation, \*\*do it by exactly 2 spaces\*\*
--   
+::: {.incremental style="font-size:70%"}
+::: columns
+::: {.column width="40%"}
+1.  Number your comments if it makes sense
+2.  Prefer infrequent, detailed comments over frequent ones which are
+    overly terse
+3.  Fencing code blocks guides the reader to the most important
+    information
+:::
+
+::: {.column width="60%"}
+::: fragment
+```{r}
+#| eval: false
+
+plot_data <- mtcars %>% 
+  
+  # 1. Create a column for the car name
+  rownames_to_column("car") %>% 
+  
+  # 2. Apply tibble format for nicer printing
+  as_tibble() %>% 
+  
+  # 3. Order cars by efficiency (mpg) for plotting later
+  mutate(car = fct_reorder(car, mpg))
+```
+:::
+
+::: {style="font-size:5%"}
+\
+:::
+
+::: fragment
+```{r}
+#| eval: false
+
+# 1. Create a column for the car name
+# 2. Apply tibble format for nicer printing
+# 3. Order cars by efficiency (mpg) for plotting later
+plot_data <- mtcars %>% 
+  rownames_to_column("car") %>% 
+  as_tibble() %>% 
+  mutate(car = fct_reorder(car, mpg))
+```
+:::
+
+::: {style="font-size:5%"}
+\
+:::
+
+::: fragment
+```{r}
+#| eval: false
+#| highlight-style: atom-one
+
+# ~~ Prepare data for plotting ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# 1. Create a column for the car name
+# 2. Apply tibble format for nicer printing
+# 3. Order cars by efficiency (mpg) for plotting later
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+plot_data <- mtcars %>% 
+  rownames_to_column("car") %>% 
+  as_tibble() %>% 
+  mutate(car = fct_reorder(car, mpg))
+```
+:::
+:::
+:::
+:::
+
+## Comments: miscellaneous tips
+
+::: {style="font-size:70%"}
+-   Give each comment its own line unless there's a *really* good reason
+    not to
+
+-   Don't needlessly abbreviate things - use full sentences
+
+-   Use the [*imperative
+    mood*](https://en.wikipedia.org/wiki/Grammatical_mood) for short
+    comments:
+
+    -   Good (imperative mood):
+
+        `# Remove rows where Cost is NA`
+
+    -   Bad (indicative mood?):
+
+        `# Removing rows where Cost is NA`
+
+-   If your code is more than 50% comments consider switching to
+    Quarto/R Markdown
+:::
+
+## More miscellaneous tips
+
+::: {.incremental style="font-size:70%"}
+-   Always use `<-` for assignment, not `=` or `->`
+
+-   You should (almost) never use `<<-` - there's (almost) always a
+    better approach
+
+-   Space stuff out! E.g. `1 / (a + b + c)` is better than `1/(a+b+c)`
+
+-   Don't use `return()` if you don't need to
+
+-   **Rewrite your code!** Code you write once and never change isn't
+    likely to be very clear.
+:::
+
+# 03. Design (is this styling?)
+
+Ideas:
+
+-   How to avoid repetition
+
+-   How to write and use functions
+
+-   How to use multiple files
+
+# 04. Some useful tools
+
+## `janitor::clean_names()`
+
+::: {.columns style="font-size:69%"}
+
+::: {.column width=30%}
+*   `clean_names()` is a very quick and easy way to make
+    syntactic column names. Use it!
+    
+*   Getting Title_Snake_Case is possible, but not obvious from the documentation
+
+*   Cleaning is lossy, so check the result
+:::
+
+::: {.column width=70%}
+```{r}
+#| collapse: true
+#| comment: "#> "
+#| message: false
+#| code-line-numbers: "|9,16,23"
+
+library(tidyr)
+library(dplyr)
+library(janitor)
+
+relig_income_small <- relig_income %>% select(-(2:7)) %>% head(2)
+
+relig_income_small
+
+relig_income_small %>% clean_names()
+
+relig_income_small %>% clean_names(case = "title", sep_out = "_")
+```
+:::
+
+:::
