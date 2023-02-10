@@ -393,61 +393,6 @@
 </div>
 
 </section>
-<section class="slide level2">
-
-<!-- # Planning (delete later) -->
-<!-- ## Ideas: -->
-<!-- -   Maybe start with a badly formatted script, and go through -->
-<!--     refactoring it by way of example. -->
-<!-- -   Ask in the chat how people would do certain things, and maybe why. -->
-<!--     Or give examples and ask which they prefer. -->
-<!-- ## Structure: -->
-<!-- 1.  What is styling, and why is it important? -->
-<!--     -   Examples (e.g. code formatting, naming things, design, comments, -->
-<!--         set-up etc) -->
-<!--     -   Analogies, e.g. with grammar. Makes code easier to read (for -->
-<!--         others and future you) AND write. -->
-<!--     -   Lots of these tips you just pick up, but it's actually worth -->
-<!--         learning them. I spent the first year of coding trying to make -->
-<!--         my code clear and flip-flopping between different styles. But -->
-<!--         ideally, you don't want to change the way you style things - -->
-<!--         consistently using a set of weird conventions is better than -->
-<!--         inconsistently using good ones. But, learning good conventions -->
-<!--         and using them consistently is best. -->
-<!-- 2.  Some specific styling tips -->
-<!--     -   Indentation / line breaks -->
-<!--         -   Some explanation of what a code-block is. Use -->
-<!--             `if`-statements. -->
-<!--     -   Naming things -->
-<!--         -   Don't abbreviate except in exceptional cases -->
-<!--         -   Begin objects with a common prefix when it makes sense -->
-<!--         -   `lower_snake_case` for object names. Exceptions? Personally, -->
-<!--             no. -->
-<!--         -   `Title_Snake_Case` for column names -->
-<!--         -   `camelCase`/`PascalCase` should almost never be used - only -->
-<!--             exception is for some object-oriented programming. If you've -->
-<!--             used the {DBI} package you'll notice a lot of these -->
-<!--             functions are `camelCase`. -->
-<!--         -   File names? -->
-<!--     -   Comments -->
-<!--         -   Explain the *why*, not that *what* -->
-<!--         -   Begin with a space, use sentence case -->
-<!--         -   Favour infrequent, detailed comments over frequent ones -->
-<!--             which don't add much -->
-<!--     -   Misc: -->
-<!--         -   `<-`, not `=` or `->` for assignment -->
-<!--         -   Always space stuff out. E.g. `1/(a+b+c)` is worse than -->
-<!--             `1 / (a + b + c)`. -->
-<!--         -   Don't inline curly braces -->
-<!--         -    -->
-<!-- 3.  Some tools to help with styling (easy to hard) -->
-<!--     -   RStudio: auto-indent, auto-rename, multiline cursor, reflow -->
-<!--         comment, ctrl + f, ctrl + shift + f, rename in scope -->
-<!--     -   {janitor} for cleaning column names -->
-<!--     -   {styler} for restyling existing code -->
-<!--     -   {lintr} for checking your own code -->
-<!--     -   {codegrip} for reshaping code -->
-</section>
 <section>
 <section id="what-is-code-styling" class="title-slide slide level1 center">
 <h1>01. What is code styling?</h1>
@@ -507,6 +452,32 @@
 </div>
 </div>
 </div>
+</div>
+</section>
+<section id="my-styling-journey" class="slide level2">
+<h2>My styling journey</h2>
+<div style="font-size:65%">
+<ul>
+<li class="fragment"><p><em>2019</em>: Started coding in R</p>
+<ul>
+<li class="fragment">Struggled to write clear code</li>
+<li class="fragment">Often got frustrated by needing to rewrite stuff</li>
+</ul></li>
+<li class="fragment"><p><em>2020-2021</em>: Had <em>some</em> kind of set of conventions specific to myself</p>
+<ul>
+<li class="fragment">Would occasionally change how I did something</li>
+<li class="fragment">This made me dislike all the code I’d written previously</li>
+<li class="fragment">This made me feel sad</li>
+</ul></li>
+<li class="fragment"><p><em>2022</em>: Started religiously following the <a href="https://style.tidyverse.org/">Tidyverse style guide</a></p>
+<ul>
+<li class="fragment">My code needed less rewrites</li>
+<li class="fragment">I spent almost no time thinking about styling (just design)</li>
+<li class="fragment">My code was clearer</li>
+<li class="fragment">This made me feel happy</li>
+</ul></li>
+<li class="fragment"><p><em>2023</em>: Life is great</p></li>
+</ul>
 </div>
 </section></section>
 <section>
@@ -921,6 +892,9 @@
 </div>
 </div>
 </section>
+<section id="files" class="slide level2">
+<h2>Files</h2>
+</section>
 <section id="more-miscellaneous-tips" class="slide level2">
 <h2>More miscellaneous tips</h2>
 <div style="font-size:70%">
@@ -1095,15 +1069,15 @@
 </section>
 <section id="lintrlint_file" class="slide level2">
 <h2><code>lintr::lint_file()</code></h2>
-<div style="font-size:60%">
+<div style="font-size:70%">
 <p><a href="https://lintr.r-lib.org/">{lintr}</a> is similar to {styler}, but it tells you about issues instead of fixing them.</p>
 <ul>
-<li><p>Effective for maintaining styling for new projects but hard to apply to old ones</p></li>
+<li><p>Good for maintaining already well-styled code, not so good for restyling old code</p></li>
 <li><p>Highly customisable, e.g.&nbsp;if you want to relax/not apply some rules</p></li>
-<li><p>RStudio brings up a handy window where you can click through to address individual lints</p></li>
+<li><p>RStudio’s UI lets you click through to address individual lints</p></li>
 </ul>
 <div class="columns">
-<div class="column" style="width:45%;">
+<div class="column" style="width:50%;">
 <div class="cell" data-file="messy-code.R">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -1127,7 +1101,7 @@
 <span id="cb21-16"><a href="#cb21-16"></a><span class="fu">ggplot2</span>(data_clean,<span class="fu">aes</span>(Date,Amount))<span class="sc">+</span><span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-</div><div class="column" style="width:55%;">
+</div><div class="column" style="width:50%;">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>lintr<span class="sc">::</span><span class="fu">lint_file</span>(<span class="st">"messy-code.R"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -1187,6 +1161,20 @@
 </table>
 <p>Note: You can use Tools -&gt; Keyboard Shortcuts Help for a full list of shortcuts</p>
 </div>
+</section></section>
+<section>
+<section id="resources" class="title-slide slide level1 center">
+<h1>05. Resources</h1>
+
+</section>
+<section id="resources-1" class="slide level2">
+<h2>Resources</h2>
+<ul>
+<li><p>The Tidyverse style guide: <a href="https://style.tidyverse.org/" class="uri">https://style.tidyverse.org/</a></p></li>
+<li><p>The Tidyverse design guide: <a href="https://design.tidyverse.org/" class="uri">https://design.tidyverse.org/</a></p></li>
+<li><p>The {styler} package: <a href="https://styler.r-lib.org/" class="uri">https://styler.r-lib.org/</a></p></li>
+<li><p>The {lintr} package: <a href="https://lintr.r-lib.org/" class="uri">https://lintr.r-lib.org/</a></p></li>
+</ul>
 <div class="footer footer-default">
 
 </div>

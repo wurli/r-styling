@@ -13,110 +13,6 @@ knitr:
 highlight-style: arrow
 ---
 
-<!-- # Planning (delete later) -->
-
-<!-- ## Ideas: -->
-
-<!-- -   Maybe start with a badly formatted script, and go through -->
-
-<!--     refactoring it by way of example. -->
-
-<!-- -   Ask in the chat how people would do certain things, and maybe why. -->
-
-<!--     Or give examples and ask which they prefer. -->
-
-<!-- ## Structure: -->
-
-<!-- 1.  What is styling, and why is it important? -->
-
-<!--     -   Examples (e.g. code formatting, naming things, design, comments, -->
-
-<!--         set-up etc) -->
-
-<!--     -   Analogies, e.g. with grammar. Makes code easier to read (for -->
-
-<!--         others and future you) AND write. -->
-
-<!--     -   Lots of these tips you just pick up, but it's actually worth -->
-
-<!--         learning them. I spent the first year of coding trying to make -->
-
-<!--         my code clear and flip-flopping between different styles. But -->
-
-<!--         ideally, you don't want to change the way you style things - -->
-
-<!--         consistently using a set of weird conventions is better than -->
-
-<!--         inconsistently using good ones. But, learning good conventions -->
-
-<!--         and using them consistently is best. -->
-
-<!-- 2.  Some specific styling tips -->
-
-<!--     -   Indentation / line breaks -->
-
-<!--         -   Some explanation of what a code-block is. Use -->
-
-<!--             `if`-statements. -->
-
-<!--     -   Naming things -->
-
-<!--         -   Don't abbreviate except in exceptional cases -->
-
-<!--         -   Begin objects with a common prefix when it makes sense -->
-
-<!--         -   `lower_snake_case` for object names. Exceptions? Personally, -->
-
-<!--             no. -->
-
-<!--         -   `Title_Snake_Case` for column names -->
-
-<!--         -   `camelCase`/`PascalCase` should almost never be used - only -->
-
-<!--             exception is for some object-oriented programming. If you've -->
-
-<!--             used the {DBI} package you'll notice a lot of these -->
-
-<!--             functions are `camelCase`. -->
-
-<!--         -   File names? -->
-
-<!--     -   Comments -->
-
-<!--         -   Explain the *why*, not that *what* -->
-
-<!--         -   Begin with a space, use sentence case -->
-
-<!--         -   Favour infrequent, detailed comments over frequent ones -->
-
-<!--             which don't add much -->
-
-<!--     -   Misc: -->
-
-<!--         -   `<-`, not `=` or `->` for assignment -->
-
-<!--         -   Always space stuff out. E.g. `1/(a+b+c)` is worse than -->
-
-<!--             `1 / (a + b + c)`. -->
-
-<!--         -   Don't inline curly braces -->
-
-<!--         -    -->
-
-<!-- 3.  Some tools to help with styling (easy to hard) -->
-
-<!--     -   RStudio: auto-indent, auto-rename, multiline cursor, reflow -->
-
-<!--         comment, ctrl + f, ctrl + shift + f, rename in scope -->
-
-<!--     -   {janitor} for cleaning column names -->
-
-<!--     -   {styler} for restyling existing code -->
-
-<!--     -   {lintr} for checking your own code -->
-
-<!--     -   {codegrip} for reshaping code -->
-
 # 01. What is code styling?
 
 ## 'Styling' covers...
@@ -168,6 +64,32 @@ Guide](https://style.tidyverse.org/)*
 ![With styling](cat-typing.gif){height="200"}
 :::
 :::
+:::
+
+## My styling journey
+
+::: {.incremental style="font-size:65%"}
+-   *2019*: Started coding in R
+
+    -   Struggled to write clear code
+    -   Often got frustrated by needing to rewrite stuff
+
+-   *2020-2021*: Had *some* kind of set of conventions specific to
+    myself
+
+    -   Would occasionally change how I did something
+    -   This made me dislike all the code I'd written previously
+    -   This made me feel sad
+
+-   *2022*: Started religiously following the [Tidyverse style
+    guide](https://style.tidyverse.org/)
+
+    -   My code needed less rewrites
+    -   I spent almost no time thinking about styling (just design)
+    -   My code was clearer
+    -   This made me feel happy
+
+-   *2023*: Life is great
 :::
 
 # 02. Some specific styling tips
@@ -496,7 +418,7 @@ plot_data <- mtcars %>%
 :::
 
 ::: {.column width="40%"}
-Fencing comments suggests a new 'section'. This can help guide the 
+Fencing comments suggests a new 'section'. This can help guide the
 reader to the most important information.
 :::
 :::
@@ -529,13 +451,13 @@ reader to the most important information.
 ## Functions
 
 ::: {.incremental style="font-size:70%"}
-*   Repeating code is bad - defining functions is the answer
+-   Repeating code is bad - defining functions is the answer
 
-*   This takes practice but makes code *much* easier to read and maintain
-
+-   This takes practice but makes code *much* easier to read and
+    maintain
 
 ::: columns
-::: {.fragment .column width=53%}
+::: {.fragment .column width="53%"}
 ```{r}
 #| eval: false
 #| filename: "Bad"
@@ -556,7 +478,7 @@ df %>%
 ```
 :::
 
-::: {.fragment .column width=47%}
+::: {.fragment .column width="47%"}
 ```{r}
 #| eval: false
 #| filename: "Better"
@@ -582,7 +504,7 @@ df %>%
 :::
 
 ::: columns
-::: {.fragment .column width=53%}
+::: {.fragment .column width="53%"}
 ```{r}
 #| eval: false
 #| filename: "Best"
@@ -596,7 +518,8 @@ df %>%
 :::
 
 <!-- Need a hidden column here to get the others to vertically align -->
-::: {.column width=47%}
+
+::: {.column width="47%"}
 ::: content-hidden
 ```{r}
 #| eval: false
@@ -608,8 +531,9 @@ df %>%
 :::
 :::
 :::
-
 :::
+
+## Files
 
 ## More miscellaneous tips
 
@@ -627,7 +551,7 @@ df %>%
     likely to be very clear.
 :::
 
-# 03. Code Design 
+# 03. Code Design
 
 ## What is design?
 
@@ -742,20 +666,19 @@ sparingly. Some reasonable use-cases:
 
 ## `lintr::lint_file()`
 
-::: {style="font-size:60%"}
+::: {style="font-size:70%"}
 [{lintr}](https://lintr.r-lib.org/) is similar to {styler}, but it tells
 you about issues instead of fixing them.
 
--   Effective for maintaining styling for new projects but hard to apply
-    to old ones
+-   Good for maintaining already well-styled code, not so good for
+    restyling old code
 
 -   Highly customisable, e.g. if you want to relax/not apply some rules
 
--   RStudio brings up a handy window where you can click through to
-    address individual lints
+-   RStudio's UI lets you click through to address individual lints
 
 ::: columns
-::: {.column width="45%"}
+::: {.column width="50%"}
 ```{r}
 #| eval: false
 #| filename: "messy-code.R"
@@ -764,7 +687,7 @@ you about issues instead of fixing them.
 ```
 :::
 
-::: {.column width="55%"}
+::: {.column width="50%"}
 ```{r}
 #| eval: false
 lintr::lint_file("messy-code.R")
@@ -789,6 +712,18 @@ lintr::lint_file("messy-code.R")
 | `Alt + Ctrl + Shift + R` | Inserts template function documentation            |
 | `Ctrl + click/drag`      | Activate multiline cursor                          |
 
-Note: You can use Tools -\> Keyboard Shortcuts Help for a full list of shortcuts
-
+Note: You can use Tools -\> Keyboard Shortcuts Help for a full list of
+shortcuts
 :::
+
+# 05. Resources
+
+## Resources
+
+-   The Tidyverse style guide: <https://style.tidyverse.org/>
+
+-   The Tidyverse design guide: <https://design.tidyverse.org/>
+
+-   The {styler} package: <https://styler.r-lib.org/>
+
+-   The {lintr} package: <https://lintr.r-lib.org/>
