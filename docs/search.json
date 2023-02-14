@@ -1,0 +1,156 @@
+[
+  {
+    "objectID": "coffee-and-coding-styling-r-code.html#styling-covers",
+    "href": "coffee-and-coding-styling-r-code.html#styling-covers",
+    "title": "Styling R Code",
+    "section": "‘Styling’ covers…",
+    "text": "‘Styling’ covers…\n\n\nCode/project structure (e.g. 01-modelling.R -> 02-plots.R -> 03-export.R )\nCode formatting\n\nNaming things (variables, columns, functions etc)\nIndentation/line breaks/spacing\nStuff specific to R, e.g. <- vs =\n\nWider principles like…\n\nWhat does a good comment say?\nWhat should a good function do?\n\nStyling is about making your work easy to understand without changing its function"
+  },
+  {
+    "objectID": "coffee-and-coding-styling-r-code.html#some-specific-benefits",
+    "href": "coffee-and-coding-styling-r-code.html#some-specific-benefits",
+    "title": "Styling R Code",
+    "section": "Some specific benefits",
+    "text": "Some specific benefits\n\n\nStyling makes writing code easier (less decisions to make)\nStyling makes reading code easier\nStyling makes it easier to avoid bugs\n\n\n\n\n\n\nWithout styling\n\n\n\n\n\n\nWith styling"
+  },
+  {
+    "objectID": "coffee-and-coding-styling-r-code.html#my-styling-journey",
+    "href": "coffee-and-coding-styling-r-code.html#my-styling-journey",
+    "title": "Styling R Code",
+    "section": "My styling journey",
+    "text": "My styling journey\n\n\n2019: Started coding in R\n\nStruggled to write clear code\nOften got frustrated by needing to rewrite stuff\n\n2020-2021: Had some kind of set of conventions specific to myself\n\nWould occasionally change how I did something\nThis made me dislike all the code I’d written previously\nThis made me feel sad\n\n2022: Started religiously following the Tidyverse style guide\n\nMy code needed less rewrites\nI spent almost no time thinking about styling (just design)\nMy code was clearer\nThis made me feel happy\n\n2023: Life is great"
+  },
+  {
+    "objectID": "coffee-and-coding-styling-r-code.html#naming-things",
+    "href": "coffee-and-coding-styling-r-code.html#naming-things",
+    "title": "Styling R Code",
+    "section": "Naming things",
+    "text": "Naming things\n\n\nKeep names as short as you can while still being descriptive. Prioritise being descriptive!\nOnly use abbreviations in special cases, e.g. acronyms\nDon’t use the name to signal the type of the object\n\n\n\n\n\n\nBad\n\ntable_totalcost <- costs %>% \n  group_by(Category) %>% \n  summarise(Cost = sum(Cost))\n\nmodel_for_use_later_on <- lm(Cost ~ Time, data = costs)\n\nread_data_func <- function(path) {\n  readr::read_csv(path, id = \"filepath\", na = \"N/A\")\n}\n\n\n\n\n\n\nGood\n\ncost_totals <- costs %>% \n  group_by(Category) %>% \n  summarise(Cost = sum(Cost))\n\ncost_model <- lm(Cost ~ Time, data = costs)\n\nread_data <- function(path) {\n  readr::read_csv(path, id = \"filepath\", na = \"N/A\")\n}\n\n\n\n\n\nNames for things like dataframes, vectors, values etc should be noun-like, e.g. costs, costs_summary, costs_uplift_factor etc\nNames for functions should be verb-like, e.g. filter(), standardise_names() , extract_coefficients() etc"
+  },
+  {
+    "objectID": "coffee-and-coding-styling-r-code.html#name-case",
+    "href": "coffee-and-coding-styling-r-code.html#name-case",
+    "title": "Styling R Code",
+    "section": "Name case",
+    "text": "Name case\n\n\n\n# snake_case\niris_summary <- summary(iris)\n\n# Title_Snake_Case\nIris_Summary <- summary(iris)\n\n# camelCase\nirisSummary <- summary(iris)\n\n# PascalCase\nIrisSummary <- summary(iris)\n\n# SCREAMING_SNAKE_CASE\nIRIS_SUMMARY <- summary(iris)\n\n\nConsistency should be prioritised above all else, but…\nlower_snake_case should be preferred in most cases\nTitle_Snake_Case works well for column names\nYou might see camelCase in other packages, but you shouldn’t use it unless you’re doing serious object-oriented programming\n\n\n\n\n\nExceptions to the lower_snake_case rule? Personally, no. I find, even with acronyms etc, things are much simpler if you follow this rule religiously."
+  },
+  {
+    "objectID": "coffee-and-coding-styling-r-code.html#syntactic-names",
+    "href": "coffee-and-coding-styling-r-code.html#syntactic-names",
+    "title": "Styling R Code",
+    "section": "Syntactic names",
+    "text": "Syntactic names\n\nR has rules for names:\n\nThey must only include letters and numbers, and must start with a letter\nOther names must be surrounded by backticks:\n\n\n\n# Good ('syntactic')\niris_proportions <- mutate(iris, across(1:4, ~ . / sum(.)))\n\n# Bad: starts with a number\n`01_iris_proportions` <- mutate(iris, across(1:4, ~ . / sum(.)))\n\n# Bad: contains a non-alphanumeric character\n`iris_%s` <- mutate(iris, across(1:4, ~ . / sum(.)))\n\n# Bad: contains a space\n`iris proportions` <- mutate(iris, across(1:4, ~ . / sum(.)))\n\n\n\nWhen your data has non-syntactic column names, clean these up ASAP!\nWhile names like my.data are allowed, avoid this naming style. Use my_data instead."
+  },
+  {
+    "objectID": "coffee-and-coding-styling-r-code.html#indentation",
+    "href": "coffee-and-coding-styling-r-code.html#indentation",
+    "title": "Styling R Code",
+    "section": "Indentation",
+    "text": "Indentation\n\n\n\n\nQuestion: Why indent?\nAnswer: Indentation shows code structure at a glance\nWhenever you increase indentation, do it by exactly 2 spaces\nThis usually means that all function arguments should have their own line\n\n\n\n\n\n\nBad\n\n iris %>% \n dplyr::mutate(Sepal.Area = Sepal.Width * Sepal.Length,\n   Petal.Area = Petal.Width * Petal.Length) %>% \n  ggplot2::ggplot(aes(x = Sepal.Area, \ny = Petal.Area, colour = Species)) +\n  ggplot2::geom_point()\n\n\n\n\n\n\n\n\n\n\n\nBetter\n\niris %>% \n  dplyr::mutate(Sepal.Area = Sepal.Width * Sepal.Length,\n                Petal.Area = Petal.Width * Petal.Length) %>% \n  ggplot2::ggplot(aes(x = Sepal.Area, \n                      y = Petal.Area, \n                      colour = Species)) +\n  ggplot2::geom_point()\n\n\n\n\n\n\n\n\n\n\n\nBest\n\niris %>% \n  dplyr::mutate(\n    Sepal.Area = Sepal.Width * Sepal.Length,\n    Petal.Area = Petal.Width * Petal.Length\n  ) %>% \n  ggplot2::ggplot(aes(\n    x = Sepal.Area, \n    y = Petal.Area, \n    colour = Species\n  )) +\n  ggplot2::geom_point()"
+  },
+  {
+    "objectID": "coffee-and-coding-styling-r-code.html#comments-what-should-they-say",
+    "href": "coffee-and-coding-styling-r-code.html#comments-what-should-they-say",
+    "title": "Styling R Code",
+    "section": "Comments: what should they say?",
+    "text": "Comments: what should they say?\n\n\n\n\nQuestion: How much should you comment?\nAnswer: As much as needed, but no more\n\n\nIf a comment is needed, it should explain the why, not the what/how (if what your code does isn’t clear, you should probably rewrite it).\n\n\n\n\n\n\nBad\n\nplot_data <- mtcars %>% \n  rownames_to_column(\"car\") %>% \n  as_tibble() %>% \n  \n  # Reorder car levels by values of mpg\n  mutate(\n    car = fct_reorder(car, mpg)\n  )\n\n\n\n\n\n\n\n\n\n\n\nGood\n\nplot_data <- mtcars %>% \n  rownames_to_column(\"car\") %>% \n  as_tibble() %>% \n  \n  # Order cars by efficiency (mpg) for plotting later\n  mutate(\n    car = fct_reorder(car, mpg)\n  )"
+  },
+  {
+    "objectID": "coffee-and-coding-styling-r-code.html#comments-maximising-clarity",
+    "href": "coffee-and-coding-styling-r-code.html#comments-maximising-clarity",
+    "title": "Styling R Code",
+    "section": "Comments: maximising clarity",
+    "text": "Comments: maximising clarity\n\n\n\n\nplot_data <- mtcars %>% \n  \n  # 1. Create a column for the car name\n  rownames_to_column(\"car\") %>% \n  \n  # 2. Apply tibble format for nicer printing\n  as_tibble() %>% \n  \n  # 3. Order cars by efficiency (mpg) for plotting later\n  mutate(car = fct_reorder(car, mpg))\n\n\nNumber your comments if it makes sense\n\n\n\n\n\n\n\n\n\n# 1. Create a column for the car name\n# 2. Apply tibble format for nicer printing\n# 3. Order cars by efficiency (mpg) for plotting later\nplot_data <- mtcars %>% \n  rownames_to_column(\"car\") %>% \n  as_tibble() %>% \n  mutate(car = fct_reorder(car, mpg))\n\n\nPrefer infrequent, detailed comments over frequent ones which are overly terse\n\n\n\n\n\n\n\n\n\n# ~~ Prepare data for plotting ~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n# 1. Create a column for the car name\n# 2. Apply tibble format for nicer printing\n# 3. Order cars by efficiency (mpg) for plotting later\n# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\nplot_data <- mtcars %>% \n  rownames_to_column(\"car\") %>% \n  as_tibble() %>% \n  mutate(car = fct_reorder(car, mpg))\n\n\nFencing comments suggests a new ‘section’. This can help guide the reader to the most important information."
+  },
+  {
+    "objectID": "coffee-and-coding-styling-r-code.html#comments-miscellaneous-tips",
+    "href": "coffee-and-coding-styling-r-code.html#comments-miscellaneous-tips",
+    "title": "Styling R Code",
+    "section": "Comments: miscellaneous tips",
+    "text": "Comments: miscellaneous tips\n\n\nGive each comment its own line unless there’s a really good reason not to\nDon’t needlessly abbreviate things - use full sentences\nUse the imperative mood for short comments:\n\nGood (imperative mood):\n# Remove rows where Cost is NA\nBad (indicative mood?):\n# Removing rows where Cost is NA\n\nIf your code is more than 50% comments consider switching to Quarto/R Markdown"
+  },
+  {
+    "objectID": "coffee-and-coding-styling-r-code.html#packages",
+    "href": "coffee-and-coding-styling-r-code.html#packages",
+    "title": "Styling R Code",
+    "section": "Packages",
+    "text": "Packages\n\n\nPrefer packages which are widely used by other colleagues. Make sure you trust the packages you’re using!\nLearn a bit about a package before using it. If it’s not well documented or maintained, find another approach.\n\nEspecially applies to packages used in answers on Stackoverflow\nTip: packages which have websites linked from GitHub are usually good!\n\nRead a function’s documentation using help(pkg::fun) or ?pkg::fun. If a function is superseded or deprecated, use the recommended new approach.\n\n\n\n\nlibrary(dplyr, warn.conflicts = FALSE)\n\niris %>% \n  head(5) %>% \n  select_(\"Species\", \"Sepal.Width\")\n#>  Warning: `select_()` was deprecated in dplyr 0.7.0.\n#>  ℹ Please use `select()` instead.\n#>    Species Sepal.Width\n#>  1  setosa         3.5\n#>  2  setosa         3.0\n#>  3  setosa         3.2\n#>  4  setosa         3.1\n#>  5  setosa         3.6\n\n\n\nlibrary(dplyr, warn.conflicts = FALSE)\n\niris %>% \n  head(5) %>% \n  select(all_of(c(\"Species\", \"Sepal.Width\")))\n#>    Species Sepal.Width\n#>  1  setosa         3.5\n#>  2  setosa         3.0\n#>  3  setosa         3.2\n#>  4  setosa         3.1\n#>  5  setosa         3.6"
+  },
+  {
+    "objectID": "coffee-and-coding-styling-r-code.html#miscellaneous-tips",
+    "href": "coffee-and-coding-styling-r-code.html#miscellaneous-tips",
+    "title": "Styling R Code",
+    "section": "Miscellaneous tips",
+    "text": "Miscellaneous tips\n\n\nAlways use <- for assignment, not = or ->\nYou should (almost) never use <<- - there’s (almost) always a better approach\nSpace stuff out! E.g. 1 / (a + b + c) is better than 1/(a+b+c)\nOnly use return() for early returns; don’t put it at the end of every function\nWrite TRUE and FALSE, not T and F\nDon’t comment out old code - delete it\nRewrite your code! Code you write once and never change isn’t likely to be very clear."
+  },
+  {
+    "objectID": "coffee-and-coding-styling-r-code.html#what-is-design",
+    "href": "coffee-and-coding-styling-r-code.html#what-is-design",
+    "title": "Styling R Code",
+    "section": "What is design?",
+    "text": "What is design?\n\n\nDesign is about making your code consistent, composable and reusable\nStyling can be boiled down to a set of rules - design is more of an art\nIn R, good code design is mostly about writing good functions\n\n\nExample: dplyr::select() is a masterclass in design:\n\n\n\nall_cols   <- colnames(iris)\nsepal_cols <- all_cols[startsWith(all_cols, \"Sepal\")]\niris_small <- iris[c(\"Species\", sepal_cols)]\n\nhead(iris_small, 5)\n#>    Species Sepal.Length Sepal.Width\n#>  1  setosa          5.1         3.5\n#>  2  setosa          4.9         3.0\n#>  3  setosa          4.7         3.2\n#>  4  setosa          4.6         3.1\n#>  5  setosa          5.0         3.6\n\n\n\nlibrary(dplyr)\n\niris %>% \n  select(Species, starts_with(\"Sepal\")) %>% \n  head(5)\n#>    Species Sepal.Length Sepal.Width\n#>  1  setosa          5.1         3.5\n#>  2  setosa          4.9         3.0\n#>  3  setosa          4.7         3.2\n#>  4  setosa          4.6         3.1\n#>  5  setosa          5.0         3.6\n\n\n\n\n\nBoth code chunks take the iris dataframe and select the Species column plus all columns which begin with \"Sepal\". Which is clearer?"
+  },
+  {
+    "objectID": "coffee-and-coding-styling-r-code.html#functions",
+    "href": "coffee-and-coding-styling-r-code.html#functions",
+    "title": "Styling R Code",
+    "section": "Functions",
+    "text": "Functions\n\n\nRepeating code is bad - defining functions is the answer\nThis takes practice but makes code much easier to read and maintain\n\n\n\n\n\n\nBad\n\n# Rescale a, b, c, and d to be between 0 and 1\ndf %>% \n  mutate(\n    a = (a - min(a, na.rm = TRUE)) / \n      (max(a, na.rm = TRUE) - min(a, na.rm = TRUE)),\n    b = (b - min(b, na.rm = TRUE)) / \n      (max(b, na.rm = TRUE) - min(a, na.rm = TRUE)),\n    c = (c - min(c, na.rm = TRUE)) / \n      (max(c, na.rm = TRUE) - min(c, na.rm = TRUE)),\n    d = (d - min(d, na.rm = TRUE)) / \n      (max(d, na.rm = TRUE) - min(d, na.rm = TRUE)),\n  )\n\n\n\n\n\n\nBetter\n\nrescale01 <- function(x) {\n  rng <- range(x, na.rm = TRUE, finite = TRUE)\n  (x - rng[1]) / (rng[2] - rng[1])\n}\n\ndf %>% \n  mutate(\n    a = rescale01(a),\n    b = rescale01(b),\n    c = rescale01(c),\n    d = rescale01(d)\n  )\n\n\n\n\n\n\n\n\n\n\n\n\n\nBest\n\n# across() applies rescale01() to columns a to d\n# This finally eliminates all code repetition!\ndf %>% \n  mutate(across(c(a, b, c, d), rescale01))"
+  },
+  {
+    "objectID": "coffee-and-coding-styling-r-code.html#reproducibility",
+    "href": "coffee-and-coding-styling-r-code.html#reproducibility",
+    "title": "Styling R Code",
+    "section": "Reproducibility",
+    "text": "Reproducibility\n\n\nCode-based approaches work best when reproducibility is a focus\nSo, strive to clearly delimit each stage of your pipeline, and make prerequisites obvious:\n\nData import (sources and access requirements should be obvious)\nData cleaning (successful 1. is prerequisite)\nModelling/analysis (successful 1. and 2. are prerequisite)\nOutputs (successful 1., 2. and 3. are all prerequisite)\n\nPeriodically restart your R session (Shift + Ctrl + F10) and rerun your code to make sure all stages still run together successfully"
+  },
+  {
+    "objectID": "coffee-and-coding-styling-r-code.html#session-reloading-from-.rdata",
+    "href": "coffee-and-coding-styling-r-code.html#session-reloading-from-.rdata",
+    "title": "Styling R Code",
+    "section": "Session reloading from .RData",
+    "text": "Session reloading from .RData\n\n\n\nBy default, RStudio will save and reload your R session from a .RData file. This discourages a reproducible workflow, so disable this feature! (RStudio -> Tools -> Global Options -> General)\nGenerally avoid saving R objects with save() and saveRDS(). It’s better to put a bit more work in to export to CSV, Excel or SQL."
+  },
+  {
+    "objectID": "coffee-and-coding-styling-r-code.html#projects-and-filepaths",
+    "href": "coffee-and-coding-styling-r-code.html#projects-and-filepaths",
+    "title": "Styling R Code",
+    "section": "Projects and filepaths",
+    "text": "Projects and filepaths\n\n\n\n\nCreate a new RStudio project for each new piece of work\nA project is defined by the presence of a file with the .Rproj extension. This tells RStudio that everything in the folder is part of the project.\n\nNever use setwd() as this can result in code which other people can’t run. Instead, use relative filepaths.\n\nUse a sub-directory R/ for your production R scripts\nWrite a README.md file for each project explaining its purpose and steps to get started using it\nFor long-term projects, or ones which are on hold, use {renv} to keep track of dependencies\n\n\n\nfs::dir_tree(\"example-proj\")\n\nexample-proj\n├── example-proj.Rproj\n├── in-development\n│   ├── pupil-counts.sql\n│   └── testing.R\n├── R\n│   ├── 01-import.R\n│   ├── 02-tidy.R\n│   ├── 03-model.R\n│   └── 04-export.R\n├── README.md\n├── reports\n│   ├── analysis-report.html\n│   ├── analysis-report.qmd\n│   └── analysis-report_files\n│       └── libs\n│           ├── bootstrap\n│           │   ├── bootstrap-icons.css\n│           │   ├── bootstrap-icons.woff\n│           │   ├── bootstrap.min.css\n│           │   └── bootstrap.min.js\n│           ├── clipboard\n│           │   └── clipboard.min.js\n│           └── quarto-html\n│               ├── anchor.min.js\n│               ├── popper.min.js\n│               ├── quarto-syntax-highlighting.css\n│               ├── quarto.js\n│               ├── tippy.css\n│               └── tippy.umd.min.js\n└── SQL\n    └── read-starts.sql"
+  },
+  {
+    "objectID": "coffee-and-coding-styling-r-code.html#janitorclean_names",
+    "href": "coffee-and-coding-styling-r-code.html#janitorclean_names",
+    "title": "Styling R Code",
+    "section": "janitor::clean_names()",
+    "text": "janitor::clean_names()\n\n\n\nclean_names() is a very quick and easy way to make syntactic column names. Use it!\nGetting Title_Snake_Case is possible, but not obvious from the documentation\nRenaming is lossy, so check the result\n\n\n\nmessy_df <- data.frame(\n  pupilNumber      = 1:2, \n  `cost 2022`      = 1234, \n  `% totalFunding` = c(0.4, 0.6),\n  `<50% funding`   = c(TRUE, FALSE), \n  check.names = FALSE\n)\n\nmessy_df\n#>    pupilNumber cost 2022 % totalFunding <50% funding\n#>  1           1      1234            0.4         TRUE\n#>  2           2      1234            0.6        FALSE\n\nmessy_df %>% \n  janitor::clean_names()\n#>    pupil_number cost_2022 percent_total_funding x50_percent_funding\n#>  1            1      1234                   0.4                TRUE\n#>  2            2      1234                   0.6               FALSE\n\nmessy_df %>% \n  janitor::clean_names(case = \"title\", sep_out = \"_\")\n#>    Pupil_Number Cost_2022 Percent_Total_Funding X50_Percent_Funding\n#>  1            1      1234                   0.4                TRUE\n#>  2            2      1234                   0.6               FALSE"
+  },
+  {
+    "objectID": "coffee-and-coding-styling-r-code.html#stylerstyle_file",
+    "href": "coffee-and-coding-styling-r-code.html#stylerstyle_file",
+    "title": "Styling R Code",
+    "section": "styler::style_file()",
+    "text": "styler::style_file()\n\n{styler} is a powerful tool to use sparingly. Some reasonable use-cases:\n\nRe-style a project you inherit\nRe-style your own old projects after seeing this presentation\n\n\n\n\n\n\nmessy-code.R\n\n#load packages\nlibrary(tidyverse);library(lubridate)\n\ndata_raw=read_csv(  \"some_file.csv\"  )\n\ndata_clean<-data_raw %>%\n  mutate(Amount=Amount/sum(Amount),\n    #Combine date parts into single column\n    Date=make_date(Year,   Month,Day))%>%\n    filter(\n  # other years aren't relevant to analysis\n          year(Date)==2020,\n          Amount> 0.1\n    )\n\nggplot2(data_clean,aes(Date,Amount))+geom_line()\n\n\n\n\n\n\nstyler::style_file(\"messy-code.R\")\n\n# load packages\nlibrary(tidyverse)\nlibrary(lubridate)\n\ndata_raw <- read_csv(\"some_file.csv\")\n\ndata_clean <- data_raw %>%\n  mutate(\n    Amount = Amount / sum(Amount),\n    # Combine date parts into single column\n    Date = make_date(Year, Month, Day)\n  ) %>%\n  filter(\n    # other years aren't relevant to analysis\n    year(Date) == 2020,\n    Amount > 0.1\n  )\n\nggplot2(data_clean, aes(Date, Amount)) + geom_line()"
+  },
+  {
+    "objectID": "coffee-and-coding-styling-r-code.html#lintrlint",
+    "href": "coffee-and-coding-styling-r-code.html#lintrlint",
+    "title": "Styling R Code",
+    "section": "lintr::lint()",
+    "text": "lintr::lint()\n\n{lintr} is similar to {styler}, but it tells you about issues instead of fixing them.\n\nGood for maintaining already well-styled code, not so good for restyling old code\nHighly customisable, e.g. if you want to relax/not apply some rules\nRStudio’s UI lets you click through to address individual lints\n\n\n\n\n\n\nmessy-code.R\n\n#load packages\nlibrary(tidyverse);library(lubridate)\n\ndata_raw=read_csv(  \"some_file.csv\"  )\n\ndata_clean<-data_raw %>%\n  mutate(Amount=Amount/sum(Amount),\n    #Combine date parts into single column\n    Date=make_date(Year,   Month,Day))%>%\n    filter(\n  # other years aren't relevant to analysis\n          year(Date)==2020,\n          Amount> 0.1\n    )\n\nggplot2(data_clean,aes(Date,Amount))+geom_line()\n\n\n\n\nlintr::lint(\"messy-code.R\")"
+  },
+  {
+    "objectID": "coffee-and-coding-styling-r-code.html#built-in-tools-in-rstudio",
+    "href": "coffee-and-coding-styling-r-code.html#built-in-tools-in-rstudio",
+    "title": "Styling R Code",
+    "section": "Built-in tools in RStudio",
+    "text": "Built-in tools in RStudio\n\n\n\n\n\n\n\n\nShortcut\nAction\n\n\n\n\nCtrl + I\nCorrect indentation\n\n\nAlt + Ctrl + Shift + M\n‘Rename in scope’, e.g. change myVar to my_var\n\n\nCtrl + Shift + F\nFind (and replace) throughout multiple files\n\n\nCtrl + Shift + /\nWrap long comments over multiple lines\n\n\nAlt + -\nInsert <- with the correct spacing\n\n\nCtrl + Shift + M\nInsert %>% with the correct spacing\n\n\nAlt + Ctrl + Shift + R\nInserts template function documentation\n\n\nAlt + click/drag\nActivate multiline cursor\n\n\n\nNote: You can use Tools -> Keyboard Shortcuts Help for a full list of shortcuts"
+  },
+  {
+    "objectID": "coffee-and-coding-styling-r-code.html#resources-1",
+    "href": "coffee-and-coding-styling-r-code.html#resources-1",
+    "title": "Styling R Code",
+    "section": "Resources",
+    "text": "Resources\n\n\nThe Tidyverse style guide: https://style.tidyverse.org/\nThe Tidyverse design guide: https://design.tidyverse.org/\nWorkflow: code style (R for Data Science): https://r4ds.hadley.nz/workflow-style.html\nThe {styler} package: https://styler.r-lib.org/\nThe {lintr} package: https://lintr.r-lib.org/\nThe {usethis} package for project/package setup: https://usethis.r-lib.org/\nThe {devtools} package for package development: https://devtools.r-lib.org/\nThe {testthat} package for unit testing: https://testthat.r-lib.org/"
+  }
+]

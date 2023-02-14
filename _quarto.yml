@@ -1,5 +1,7 @@
 project:
   title: "coffee-and-coding-styling-r-code"
+  type: "website"
+  output-dir: docs
 
 editor: visual
 
