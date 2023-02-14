@@ -30,7 +30,7 @@ highlight-style: arrow
 -   Wider *principles* like...
 
     -   What does a good comment say?
-    -   What is good code design?
+    -   What should a good function do?
 
 -   Styling is about making your work easy to understand without
     changing its function
@@ -69,19 +69,19 @@ Guide](https://style.tidyverse.org/)*
 ## My styling journey
 
 ::: {.incremental style="font-size:65%"}
--   *2019*: Started coding in R
+-   <u>2019</u>: Started coding in R
 
     -   Struggled to write clear code
     -   Often got frustrated by needing to rewrite stuff
 
--   *2020-2021*: Had *some* kind of set of conventions specific to
+-   <u>2020-2021</u>: Had *some* kind of set of conventions specific to
     myself
 
     -   Would occasionally change how I did something
     -   This made me dislike all the code I'd written previously
     -   This made me feel sad
 
--   *2022*: Started religiously following the [Tidyverse style
+-   <u>2022</u>: Started religiously following the [Tidyverse style
     guide](https://style.tidyverse.org/)
 
     -   My code needed less rewrites
@@ -89,7 +89,7 @@ Guide](https://style.tidyverse.org/)*
     -   My code was clearer
     -   This made me feel happy
 
--   *2023*: Life is great
+-   <u>2023</u>: Life is great
 :::
 
 # 02. Some specific styling tips
@@ -426,7 +426,7 @@ reader to the most important information.
 
 ## Comments: miscellaneous tips
 
-::: {style="font-size:70%"}
+::: {.incremental style="font-size:70%"}
 -   Give each comment its own line unless there's a *really* good reason
     not to
 
@@ -448,94 +448,51 @@ reader to the most important information.
     Quarto/R Markdown
 :::
 
-## Functions
+## Packages
 
 ::: {.incremental style="font-size:70%"}
--   Repeating code is bad - defining functions is the answer
+-   Prefer packages which are widely used by other colleagues. Make sure
+    you trust the packages you're using!
 
--   This takes practice but makes code *much* easier to read and
-    maintain
+-   Learn a bit about a package before using it. If it's not well
+    documented or maintained, find another approach.
 
-::: columns
-::: {.fragment .column width="53%"}
+    -   Especially applies to packages used in answers on Stackoverflow
+
+    -   Tip: packages which have websites linked from GitHub are usually
+        good!
+
+-   Read a function's documentation using `help(pkg::fun)` or
+    `?pkg::fun`. If a function is superseded or deprecated, use the
+    recommended new approach.
+
+::: {.columns .fragment}
+::: {.column width="50%"}
 ```{r}
-#| eval: false
-#| filename: "Bad"
-#| code-line-numbers: "|7"
+#| message: true
+#| warning: true
 
-# Rescale a, b, c, and d to be between 0 and 1
-df %>% 
-  mutate(
-    a = (a - min(a, na.rm = TRUE)) / 
-      (max(a, na.rm = TRUE) - min(a, na.rm = TRUE)),
-    b = (b - min(b, na.rm = TRUE)) / 
-      (max(b, na.rm = TRUE) - min(a, na.rm = TRUE)),
-    c = (c - min(c, na.rm = TRUE)) / 
-      (max(c, na.rm = TRUE) - min(c, na.rm = TRUE)),
-    d = (d - min(d, na.rm = TRUE)) / 
-      (max(d, na.rm = TRUE) - min(d, na.rm = TRUE)),
-  )
+library(dplyr, warn.conflicts = FALSE)
+
+iris %>% 
+  head(5) %>% 
+  select_("Species", "Sepal.Width")
 ```
 :::
 
-::: {.fragment .column width="47%"}
+::: {.column width="50%"}
 ```{r}
-#| eval: false
-#| filename: "Better"
-#| code-line-numbers: true
-rescale01 <- function(x) {
-  rng <- range(x, na.rm = TRUE, finite = TRUE)
-  (x - min(x)) / (max(x) - min(x))
-}
+library(dplyr, warn.conflicts = FALSE)
 
-df %>% 
-  mutate(
-    a = rescale01(a),
-    b = rescale01(b),
-    c = rescale01(c),
-    d = rescale01(d)
-  )
-```
-:::
-:::
-
-::: {style="font-size:5%"}
-\
-:::
-
-::: columns
-::: {.fragment .column width="53%"}
-```{r}
-#| eval: false
-#| filename: "Best"
-#| code-line-numbers: true
-
-# across() applies rescale01() to columns a to d
-# This finally eliminates all code repetition!
-df %>% 
-  mutate(across(c(a, b, c, d), rescale01))
-```
-:::
-
-<!-- Need a hidden column here to get the others to vertically align -->
-
-::: {.column width="47%"}
-::: content-hidden
-```{r}
-#| eval: false
-#| filename: "Best"
-#| code-line-numbers: true
-df %>%
-  mutate(across(a:d, rescale01))
+iris %>% 
+  head(5) %>% 
+  select(all_of(c("Species", "Sepal.Width")))
 ```
 :::
 :::
 :::
-:::
 
-## Files
-
-## More miscellaneous tips
+## Miscellaneous tips
 
 ::: {.incremental style="font-size:70%"}
 -   Always use `<-` for assignment, not `=` or `->`
@@ -545,7 +502,12 @@ df %>%
 
 -   Space stuff out! E.g. `1 / (a + b + c)` is better than `1/(a+b+c)`
 
--   Don't use `return()` if you don't need to
+-   Only use `return()` for early returns; don't put it at the end of
+    every function
+
+-   Write `TRUE` and `FALSE`, not `T` and `F`
+
+-   Don't comment out old code - delete it
 
 -   **Rewrite your code!** Code you write once and never change isn't
     likely to be very clear.
@@ -597,6 +559,164 @@ column plus all columns which begin with `"Sepal"`. Which is clearer?
 :::
 :::
 
+## Functions
+
+::: {.incremental style="font-size:70%"}
+-   Repeating code is bad - defining functions is the answer
+
+-   This takes practice but makes code *much* easier to read and
+    maintain
+
+::: columns
+::: {.fragment .column width="53%"}
+```{r}
+#| eval: false
+#| filename: "Bad"
+#| code-line-numbers: "|7"
+
+# Rescale a, b, c, and d to be between 0 and 1
+df %>% 
+  mutate(
+    a = (a - min(a, na.rm = TRUE)) / 
+      (max(a, na.rm = TRUE) - min(a, na.rm = TRUE)),
+    b = (b - min(b, na.rm = TRUE)) / 
+      (max(b, na.rm = TRUE) - min(a, na.rm = TRUE)),
+    c = (c - min(c, na.rm = TRUE)) / 
+      (max(c, na.rm = TRUE) - min(c, na.rm = TRUE)),
+    d = (d - min(d, na.rm = TRUE)) / 
+      (max(d, na.rm = TRUE) - min(d, na.rm = TRUE)),
+  )
+```
+:::
+
+::: {.fragment .column width="47%"}
+```{r}
+#| eval: false
+#| filename: "Better"
+#| code-line-numbers: true
+rescale01 <- function(x) {
+  rng <- range(x, na.rm = TRUE, finite = TRUE)
+  (x - rng[1]) / (rng[2] - rng[1])
+}
+
+df %>% 
+  mutate(
+    a = rescale01(a),
+    b = rescale01(b),
+    c = rescale01(c),
+    d = rescale01(d)
+  )
+```
+:::
+:::
+
+::: {style="font-size:5%"}
+\
+:::
+
+::: columns
+::: {.fragment .column width="53%"}
+```{r}
+#| eval: false
+#| filename: "Best"
+#| code-line-numbers: true
+
+# across() applies rescale01() to columns a to d
+# This finally eliminates all code repetition!
+df %>% 
+  mutate(across(c(a, b, c, d), rescale01))
+```
+:::
+
+<!-- Need a hidden column here to get the others to vertically align -->
+
+::: {.column width="47%"}
+::: content-hidden
+```{r}
+#| eval: false
+#| filename: "Best"
+#| code-line-numbers: true
+df %>%
+  mutate(across(a:d, rescale01))
+```
+:::
+:::
+:::
+:::
+
+## Reproducibility
+
+::: {.incremental style="font-size:70%"}
+-   Code-based approaches work best when reproducibility is a focus
+
+-   So, strive to clearly delimit each stage of your pipeline, and make
+    prerequisites obvious:
+
+    1.  Data import (sources and access requirements should be obvious)
+
+    2.  Data cleaning (successful 1. is prerequisite)
+
+    3.  Modelling/analysis (successful 1. and 2. are prerequisite)
+
+    4.  Outputs (successful 1., 2. and 3. are all prerequisite)
+
+-   Periodically restart your R session (`Shift + Ctrl + F10`) and rerun
+    your code to make sure all stages still run together successfully
+:::
+
+## Session reloading from `.RData`
+
+::: {.columns style="font-size:70%"}
+::: {.column width="50%"}
+-   By default, RStudio will save and reload your R session from a
+    `.RData` file. This discourages a reproducible workflow, so
+    **disable this feature!** (RStudio -\> Tools -\> Global Options -\>
+    General)
+
+-   Generally avoid saving R objects with `save()` and `saveRDS()`. It's
+    better to put a bit more work in to export to CSV, Excel or SQL.
+:::
+
+::: {.column width="50%"}
+![](rstudio-disable-rdata.jpg)
+:::
+:::
+
+## Projects and filepaths
+
+::: {.incremental style="font-size:70%"}
+::: columns
+::: {.column width="70%"}
+-   Create a new RStudio project for each new piece of work
+
+-   A project is defined by the presence of a file with the `.Rproj`
+    extension. This tells RStudio that everything in the folder is part
+    of the project.
+
+    -   Never use `setwd()` as this can result in code which other
+        people can't run. Instead, use [relative
+        filepaths](https://r4ds.hadley.nz/workflow-scripts.html#relative-and-absolute-paths).
+
+-   Use a sub-directory `R/` for your production R scripts
+
+-   Write a `README.md` file for each project explaining its purpose and
+    steps to get started using it
+
+-   For long-term projects, or ones which are on hold, use
+    [{renv}](https://rstudio.github.io/renv/index.html) to keep track of
+    dependencies
+:::
+
+::: {.column .fragment width="30%"}
+```{r}
+#| collapse: false
+#| comment: ""
+fs::dir_tree("example-proj")
+```
+:::
+:::
+:::
+
 # 04. Some useful tools
 
 ## `janitor::clean_names()`
@@ -609,13 +729,13 @@ column plus all columns which begin with `"Sepal"`. Which is clearer?
 -   Getting Title_Snake_Case is possible, but not obvious from the
     documentation
 
--   Cleaning is lossy, so check the result
+-   Renaming is lossy, so check the result
 :::
 
 ::: {.column width="70%"}
 ```{r}
 #| message: false
-#| code-line-numbers: "|9-10,14-16,20-22"
+#| code-line-numbers: "|10,16,22"
 
 messy_df <- data.frame(
   pupilNumber      = 1:2, 
@@ -664,7 +784,7 @@ sparingly. Some reasonable use-cases:
 :::
 :::
 
-## `lintr::lint_file()`
+## `lintr::lint()`
 
 ::: {style="font-size:70%"}
 [{lintr}](https://lintr.r-lib.org/) is similar to {styler}, but it tells
@@ -690,7 +810,7 @@ you about issues instead of fixing them.
 ::: {.column width="50%"}
 ```{r}
 #| eval: false
-lintr::lint_file("messy-code.R")
+lintr::lint("messy-code.R")
 ```
 
 ![](lintr-rstudio-screenshot.png)
@@ -710,7 +830,7 @@ lintr::lint_file("messy-code.R")
 | `Alt + -`                | Insert `<-` with the correct spacing               |
 | `Ctrl + Shift + M`       | Insert `%>%` with the correct spacing              |
 | `Alt + Ctrl + Shift + R` | Inserts template function documentation            |
-| `Ctrl + click/drag`      | Activate multiline cursor                          |
+| `Alt + click/drag`       | Activate multiline cursor                          |
 
 Note: You can use Tools -\> Keyboard Shortcuts Help for a full list of
 shortcuts
@@ -720,10 +840,24 @@ shortcuts
 
 ## Resources
 
+::: {style="font-size:70%"}
 -   The Tidyverse style guide: <https://style.tidyverse.org/>
 
 -   The Tidyverse design guide: <https://design.tidyverse.org/>
 
+-   Workflow: code style (R for Data Science):
+    <https://r4ds.hadley.nz/workflow-style.html>
+
 -   The {styler} package: <https://styler.r-lib.org/>
 
 -   The {lintr} package: <https://lintr.r-lib.org/>
+
+-   The {usethis} package for project/package setup:
+    <https://usethis.r-lib.org/>
+
+-   The {devtools} package for package development:
+    <https://devtools.r-lib.org/>
+
+-   The {testthat} package for unit testing:
+    <https://testthat.r-lib.org/>
+:::

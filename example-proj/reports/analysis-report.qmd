@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "Example report"
 format: html
 ---
 
@@ -27,6 +27,3 @@ You can add options to executable code like this
 
 The `echo: false` option disables the printing of code (only output is
 displayed).
-
-::: {style="font-size:70%"}
-:::

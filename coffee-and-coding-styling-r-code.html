@@ -412,7 +412,7 @@
 <li class="fragment"><p>Wider <em>principles</em> like…</p>
 <ul>
 <li class="fragment">What does a good comment say?</li>
-<li class="fragment">What is good code design?</li>
+<li class="fragment">What should a good function do?</li>
 </ul></li>
 <li class="fragment"><p>Styling is about making your work easy to understand without changing its function</p></li>
 </ul>
@@ -458,25 +458,25 @@
 <h2>My styling journey</h2>
 <div style="font-size:65%">
 <ul>
-<li class="fragment"><p><em>2019</em>: Started coding in R</p>
+<li class="fragment"><p><u>2019</u>: Started coding in R</p>
 <ul>
 <li class="fragment">Struggled to write clear code</li>
 <li class="fragment">Often got frustrated by needing to rewrite stuff</li>
 </ul></li>
-<li class="fragment"><p><em>2020-2021</em>: Had <em>some</em> kind of set of conventions specific to myself</p>
+<li class="fragment"><p><u>2020-2021</u>: Had <em>some</em> kind of set of conventions specific to myself</p>
 <ul>
 <li class="fragment">Would occasionally change how I did something</li>
 <li class="fragment">This made me dislike all the code I’d written previously</li>
 <li class="fragment">This made me feel sad</li>
 </ul></li>
-<li class="fragment"><p><em>2022</em>: Started religiously following the <a href="https://style.tidyverse.org/">Tidyverse style guide</a></p>
+<li class="fragment"><p><u>2022</u>: Started religiously following the <a href="https://style.tidyverse.org/">Tidyverse style guide</a></p>
 <ul>
 <li class="fragment">My code needed less rewrites</li>
 <li class="fragment">I spent almost no time thinking about styling (just design)</li>
 <li class="fragment">My code was clearer</li>
 <li class="fragment">This made me feel happy</li>
 </ul></li>
-<li class="fragment"><p><em>2023</em>: Life is great</p></li>
+<li class="fragment"><p><u>2023</u>: Life is great</p></li>
 </ul>
 </div>
 </section></section>
@@ -806,103 +806,76 @@
 <h2>Comments: miscellaneous tips</h2>
 <div style="font-size:70%">
 <ul>
-<li><p>Give each comment its own line unless there’s a <em>really</em> good reason not to</p></li>
-<li><p>Don’t needlessly abbreviate things - use full sentences</p></li>
-<li><p>Use the <a href="https://en.wikipedia.org/wiki/Grammatical_mood"><em>imperative mood</em></a>&nbsp;for short comments:</p>
+<li class="fragment"><p>Give each comment its own line unless there’s a <em>really</em> good reason not to</p></li>
+<li class="fragment"><p>Don’t needlessly abbreviate things - use full sentences</p></li>
+<li class="fragment"><p>Use the <a href="https://en.wikipedia.org/wiki/Grammatical_mood"><em>imperative mood</em></a>&nbsp;for short comments:</p>
 <ul>
-<li><p>Good (imperative mood):</p>
+<li class="fragment"><p>Good (imperative mood):</p>
 <p><code># Remove rows where Cost is NA</code></p></li>
-<li><p>Bad (indicative mood?):</p>
+<li class="fragment"><p>Bad (indicative mood?):</p>
 <p><code># Removing rows where Cost is NA</code></p></li>
 </ul></li>
-<li><p>If your code is more than 50% comments consider switching to Quarto/R Markdown</p></li>
+<li class="fragment"><p>If your code is more than 50% comments consider switching to Quarto/R Markdown</p></li>
 </ul>
 </div>
 </section>
-<section id="functions" class="slide level2">
-<h2>Functions</h2>
+<section id="packages" class="slide level2">
+<h2>Packages</h2>
 <div style="font-size:70%">
 <ul>
-<li class="fragment"><p>Repeating code is bad - defining functions is the answer</p></li>
-<li class="fragment"><p>This takes practice but makes code <em>much</em> easier to read and maintain</p></li>
+<li class="fragment"><p>Prefer packages which are widely used by other colleagues. Make sure you trust the packages you’re using!</p></li>
+<li class="fragment"><p>Learn a bit about a package before using it. If it’s not well documented or maintained, find another approach.</p>
+<ul>
+<li class="fragment"><p>Especially applies to packages used in answers on Stackoverflow</p></li>
+<li class="fragment"><p>Tip: packages which have websites linked from GitHub are usually good!</p></li>
+</ul></li>
+<li class="fragment"><p>Read a function’s documentation using <code>help(pkg::fun)</code> or <code>?pkg::fun</code>. If a function is superseded or deprecated, use the recommended new approach.</p></li>
 </ul>
-<div class="columns">
-<div class="fragment column" style="width:53%;">
+<div class="columns fragment">
+<div class="column" style="width:50%;">
 <div class="cell">
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>Bad</strong></pre>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select_</span>(<span class="st">"Species"</span>, <span class="st">"Sepal.Width"</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Warning: `select_()` was deprecated in dplyr 0.7.0.</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  ℹ Please use `select()` instead.</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Species Sepal.Width</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1  setosa         3.5</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2  setosa         3.0</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3  setosa         3.2</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4  setosa         3.1</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5  setosa         3.6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="sourceCode cell-code" id="cb13" data-code-line-numbers="|7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># Rescale a, b, c, and d to be between 0 and 1</span></span>
-<span id="cb13-2"><a href="#cb13-2"></a>df <span class="sc">%&gt;%</span> </span>
-<span id="cb13-3"><a href="#cb13-3"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb13-4"><a href="#cb13-4"></a>    <span class="at">a =</span> (a <span class="sc">-</span> <span class="fu">min</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> </span>
-<span id="cb13-5"><a href="#cb13-5"></a>      (<span class="fu">max</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
-<span id="cb13-6"><a href="#cb13-6"></a>    <span class="at">b =</span> (b <span class="sc">-</span> <span class="fu">min</span>(b, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> </span>
-<span id="cb13-7"><a href="#cb13-7"></a>      (<span class="fu">max</span>(b, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
-<span id="cb13-8"><a href="#cb13-8"></a>    <span class="at">c =</span> (c <span class="sc">-</span> <span class="fu">min</span>(c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> </span>
-<span id="cb13-9"><a href="#cb13-9"></a>      (<span class="fu">max</span>(c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
-<span id="cb13-10"><a href="#cb13-10"></a>    <span class="at">d =</span> (d <span class="sc">-</span> <span class="fu">min</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> </span>
-<span id="cb13-11"><a href="#cb13-11"></a>      (<span class="fu">max</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
-<span id="cb13-12"><a href="#cb13-12"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</div><div class="fragment column" style="width:47%;">
+</div><div class="column" style="width:50%;">
 <div class="cell">
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>Better</strong></pre>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> </span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">all_of</span>(<span class="fu">c</span>(<span class="st">"Species"</span>, <span class="st">"Sepal.Width"</span>)))</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Species Sepal.Width</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1  setosa         3.5</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2  setosa         3.0</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3  setosa         3.2</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4  setosa         3.1</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5  setosa         3.6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="sourceCode cell-code" id="cb14" data-code-line-numbers="true"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>rescale01 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb14-2"><a href="#cb14-2"></a>  rng <span class="ot">&lt;-</span> <span class="fu">range</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">finite =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb14-3"><a href="#cb14-3"></a>  (x <span class="sc">-</span> <span class="fu">min</span>(x)) <span class="sc">/</span> (<span class="fu">max</span>(x) <span class="sc">-</span> <span class="fu">min</span>(x))</span>
-<span id="cb14-4"><a href="#cb14-4"></a>}</span>
-<span id="cb14-5"><a href="#cb14-5"></a></span>
-<span id="cb14-6"><a href="#cb14-6"></a>df <span class="sc">%&gt;%</span> </span>
-<span id="cb14-7"><a href="#cb14-7"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb14-8"><a href="#cb14-8"></a>    <span class="at">a =</span> <span class="fu">rescale01</span>(a),</span>
-<span id="cb14-9"><a href="#cb14-9"></a>    <span class="at">b =</span> <span class="fu">rescale01</span>(b),</span>
-<span id="cb14-10"><a href="#cb14-10"></a>    <span class="at">c =</span> <span class="fu">rescale01</span>(c),</span>
-<span id="cb14-11"><a href="#cb14-11"></a>    <span class="at">d =</span> <span class="fu">rescale01</span>(d)</span>
-<span id="cb14-12"><a href="#cb14-12"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</div>
-</div>
-<div style="font-size:5%">
-<p><br>
-</p>
-</div>
-<div class="columns">
-<div class="fragment column" style="width:53%;">
-<div class="cell">
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>Best</strong></pre>
-</div>
-<div class="sourceCode cell-code" id="cb15" data-code-line-numbers="true"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="co"># across() applies rescale01() to columns a to d</span></span>
-<span id="cb15-2"><a href="#cb15-2"></a><span class="co"># This finally eliminates all code repetition!</span></span>
-<span id="cb15-3"><a href="#cb15-3"></a>df <span class="sc">%&gt;%</span> </span>
-<span id="cb15-4"><a href="#cb15-4"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(a, b, c, d), rescale01))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</div><!-- Need a hidden column here to get the others to vertically align --><div class="column" style="width:47%;">
-
 </div>
 </div>
 </div>
 </section>
-<section id="files" class="slide level2">
-<h2>Files</h2>
-</section>
-<section id="more-miscellaneous-tips" class="slide level2">
-<h2>More miscellaneous tips</h2>
+<section id="miscellaneous-tips" class="slide level2">
+<h2>Miscellaneous tips</h2>
 <div style="font-size:70%">
 <ul>
 <li class="fragment"><p>Always use <code>&lt;-</code> for assignment, not <code>=</code> or <code>-&gt;</code></p></li>
 <li class="fragment"><p>You should (almost) never use <code>&lt;&lt;-</code> - there’s (almost) always a better approach</p></li>
 <li class="fragment"><p>Space stuff out! E.g. <code>1 / (a + b + c)</code> is better than <code>1/(a+b+c)</code></p></li>
-<li class="fragment"><p>Don’t use <code>return()</code> if you don’t need to</p></li>
+<li class="fragment"><p>Only use <code>return()</code> for early returns; don’t put it at the end of every function</p></li>
+<li class="fragment"><p>Write <code>TRUE</code> and <code>FALSE</code>, not <code>T</code> and <code>F</code></p></li>
+<li class="fragment"><p>Don’t comment out old code - delete it</p></li>
 <li class="fragment"><p><strong>Rewrite your code!</strong> Code you write once and never change isn’t likely to be very clear.</p></li>
 </ul>
 </div>
@@ -925,11 +898,25 @@
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>all_cols   <span class="ot">&lt;-</span> <span class="fu">colnames</span>(iris)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>sepal_cols <span class="ot">&lt;-</span> all_cols[<span class="fu">startsWith</span>(all_cols, <span class="st">"Sepal"</span>)]</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>iris_small <span class="ot">&lt;-</span> iris[<span class="fu">c</span>(<span class="st">"Species"</span>, sepal_cols)]</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris_small, <span class="dv">5</span>)</span>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>all_cols   <span class="ot">&lt;-</span> <span class="fu">colnames</span>(iris)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>sepal_cols <span class="ot">&lt;-</span> all_cols[<span class="fu">startsWith</span>(all_cols, <span class="st">"Sepal"</span>)]</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>iris_small <span class="ot">&lt;-</span> iris[<span class="fu">c</span>(<span class="st">"Species"</span>, sepal_cols)]</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris_small, <span class="dv">5</span>)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Species Sepal.Length Sepal.Width</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1  setosa          5.1         3.5</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2  setosa          4.9         3.0</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3  setosa          4.7         3.2</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4  setosa          4.6         3.1</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5  setosa          5.0         3.6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> </span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Species, <span class="fu">starts_with</span>(<span class="st">"Sepal"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span>
 <span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Species Sepal.Length Sepal.Width</span></span>
 <span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1  setosa          5.1         3.5</span></span>
 <span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2  setosa          4.9         3.0</span></span>
@@ -937,25 +924,153 @@
 <span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4  setosa          4.6         3.1</span></span>
 <span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5  setosa          5.0         3.6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div><div class="column" style="width:50%;">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> </span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Species, <span class="fu">starts_with</span>(<span class="st">"Sepal"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Species Sepal.Length Sepal.Width</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1  setosa          5.1         3.5</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2  setosa          4.9         3.0</span></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3  setosa          4.7         3.2</span></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4  setosa          4.6         3.1</span></span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5  setosa          5.0         3.6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 </div>
 </div>
 </div>
 <div class="fragment">
 <p>Both code chunks take the <code>iris</code> dataframe and select the <code>Species</code> column plus all columns which begin with <code>"Sepal"</code>. Which is clearer?</p>
+</div>
+</div>
+</section>
+<section id="functions" class="slide level2">
+<h2>Functions</h2>
+<div style="font-size:70%">
+<ul>
+<li class="fragment"><p>Repeating code is bad - defining functions is the answer</p></li>
+<li class="fragment"><p>This takes practice but makes code <em>much</em> easier to read and maintain</p></li>
+</ul>
+<div class="columns">
+<div class="fragment column" style="width:53%;">
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Bad</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17" data-code-line-numbers="|7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># Rescale a, b, c, and d to be between 0 and 1</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb17-3"><a href="#cb17-3"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb17-4"><a href="#cb17-4"></a>    <span class="at">a =</span> (a <span class="sc">-</span> <span class="fu">min</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> </span>
+<span id="cb17-5"><a href="#cb17-5"></a>      (<span class="fu">max</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb17-6"><a href="#cb17-6"></a>    <span class="at">b =</span> (b <span class="sc">-</span> <span class="fu">min</span>(b, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> </span>
+<span id="cb17-7"><a href="#cb17-7"></a>      (<span class="fu">max</span>(b, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb17-8"><a href="#cb17-8"></a>    <span class="at">c =</span> (c <span class="sc">-</span> <span class="fu">min</span>(c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> </span>
+<span id="cb17-9"><a href="#cb17-9"></a>      (<span class="fu">max</span>(c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb17-10"><a href="#cb17-10"></a>    <span class="at">d =</span> (d <span class="sc">-</span> <span class="fu">min</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> </span>
+<span id="cb17-11"><a href="#cb17-11"></a>      (<span class="fu">max</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb17-12"><a href="#cb17-12"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div><div class="fragment column" style="width:47%;">
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Better</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18" data-code-line-numbers="true"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>rescale01 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb18-2"><a href="#cb18-2"></a>  rng <span class="ot">&lt;-</span> <span class="fu">range</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">finite =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb18-3"><a href="#cb18-3"></a>  (x <span class="sc">-</span> rng[<span class="dv">1</span>]) <span class="sc">/</span> (rng[<span class="dv">2</span>] <span class="sc">-</span> rng[<span class="dv">1</span>])</span>
+<span id="cb18-4"><a href="#cb18-4"></a>}</span>
+<span id="cb18-5"><a href="#cb18-5"></a></span>
+<span id="cb18-6"><a href="#cb18-6"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb18-7"><a href="#cb18-7"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb18-8"><a href="#cb18-8"></a>    <span class="at">a =</span> <span class="fu">rescale01</span>(a),</span>
+<span id="cb18-9"><a href="#cb18-9"></a>    <span class="at">b =</span> <span class="fu">rescale01</span>(b),</span>
+<span id="cb18-10"><a href="#cb18-10"></a>    <span class="at">c =</span> <span class="fu">rescale01</span>(c),</span>
+<span id="cb18-11"><a href="#cb18-11"></a>    <span class="at">d =</span> <span class="fu">rescale01</span>(d)</span>
+<span id="cb18-12"><a href="#cb18-12"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<div style="font-size:5%">
+<p><br>
+</p>
+</div>
+<div class="columns">
+<div class="fragment column" style="width:53%;">
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Best</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19" data-code-line-numbers="true"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="co"># across() applies rescale01() to columns a to d</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a><span class="co"># This finally eliminates all code repetition!</span></span>
+<span id="cb19-3"><a href="#cb19-3"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb19-4"><a href="#cb19-4"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(a, b, c, d), rescale01))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div><!-- Need a hidden column here to get the others to vertically align --><div class="column" style="width:47%;">
+
+</div>
+</div>
+</div>
+</section>
+<section id="reproducibility" class="slide level2">
+<h2>Reproducibility</h2>
+<div style="font-size:70%">
+<ul>
+<li class="fragment"><p>Code-based approaches work best when reproducibility is a focus</p></li>
+<li class="fragment"><p>So, strive to clearly delimit each stage of your pipeline, and make prerequisites obvious:</p>
+<ol type="1">
+<li class="fragment"><p>Data import (sources and access requirements should be obvious)</p></li>
+<li class="fragment"><p>Data cleaning (successful 1. is prerequisite)</p></li>
+<li class="fragment"><p>Modelling/analysis (successful 1. and 2. are prerequisite)</p></li>
+<li class="fragment"><p>Outputs (successful 1., 2. and 3. are all prerequisite)</p></li>
+</ol></li>
+<li class="fragment"><p>Periodically restart your R session (<code>Shift + Ctrl + F10</code>) and rerun your code to make sure all stages still run together successfully</p></li>
+</ul>
+</div>
+</section>
+<section id="session-reloading-from-.rdata" class="slide level2">
+<h2>Session reloading from <code>.RData</code></h2>
+<div class="columns" style="font-size:70%">
+<div class="column" style="width:50%;">
+<ul>
+<li><p>By default, RStudio will save and reload your R session from a <code>.RData</code> file. This discourages a reproducible workflow, so <strong>disable this feature!</strong> (RStudio -&gt; Tools -&gt; Global Options -&gt; General)</p></li>
+<li><p>Generally avoid saving R objects with <code>save()</code> and <code>saveRDS()</code>. It’s better to put a bit more work in to export to CSV, Excel or SQL.</p></li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><img data-src="rstudio-disable-rdata.jpg"></p>
+</div>
+</div>
+</section>
+<section id="projects-and-filepaths" class="slide level2">
+<h2>Projects and filepaths</h2>
+<div style="font-size:70%">
+<div class="columns">
+<div class="column" style="width:70%;">
+<ul>
+<li class="fragment"><p>Create a new RStudio project for each new piece of work</p></li>
+<li class="fragment"><p>A project is defined by the presence of a file with the <code>.Rproj</code> extension. This tells RStudio that everything in the folder is part of the project.</p>
+<ul>
+<li class="fragment">Never use <code>setwd()</code> as this can result in code which other people can’t run. Instead, use <a href="https://r4ds.hadley.nz/workflow-scripts.html#relative-and-absolute-paths">relative filepaths</a>.</li>
+</ul></li>
+<li class="fragment"><p>Use a sub-directory <code>R/</code> for your production R scripts</p></li>
+<li class="fragment"><p>Write a <code>README.md</code> file for each project explaining its purpose and steps to get started using it</p></li>
+<li class="fragment"><p>For long-term projects, or ones which are on hold, use <a href="https://rstudio.github.io/renv/index.html">{renv}</a> to keep track of dependencies</p></li>
+</ul>
+</div><div class="column fragment" style="width:30%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>fs<span class="sc">::</span><span class="fu">dir_tree</span>(<span class="st">"example-proj"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>example-proj
+├── example-proj.Rproj
+├── in-development
+│   ├── pupil-counts.sql
+│   └── testing.R
+├── R
+│   ├── 01-import.R
+│   ├── 02-tidy.R
+│   ├── 03-model.R
+│   └── 04-export.R
+├── README.md
+├── reports
+│   └── analysis-report.qmd
+└── SQL
+    └── read-starts.sql</code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 </section></section>
@@ -971,34 +1086,34 @@
 <ul>
 <li><p><code>clean_names()</code> is a very quick and easy way to make syntactic column names. Use it!</p></li>
 <li><p>Getting Title_Snake_Case is possible, but not obvious from the documentation</p></li>
-<li><p>Cleaning is lossy, so check the result</p></li>
+<li><p>Renaming is lossy, so check the result</p></li>
 </ul>
 </div><div class="column" style="width:70%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18" data-code-line-numbers="|9-10,14-16,20-22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>messy_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb18-2"><a href="#cb18-2"></a>  <span class="at">pupilNumber      =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, </span>
-<span id="cb18-3"><a href="#cb18-3"></a>  <span class="st">`</span><span class="at">cost 2022</span><span class="st">`</span>      <span class="ot">=</span> <span class="dv">1234</span>, </span>
-<span id="cb18-4"><a href="#cb18-4"></a>  <span class="st">`</span><span class="at">% totalFunding</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">0.4</span>, <span class="fl">0.6</span>),</span>
-<span id="cb18-5"><a href="#cb18-5"></a>  <span class="st">`</span><span class="at">&lt;50% funding</span><span class="st">`</span>   <span class="ot">=</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>), </span>
-<span id="cb18-6"><a href="#cb18-6"></a>  <span class="at">check.names =</span> <span class="cn">FALSE</span></span>
-<span id="cb18-7"><a href="#cb18-7"></a>)</span>
-<span id="cb18-8"><a href="#cb18-8"></a></span>
-<span id="cb18-9"><a href="#cb18-9"></a>messy_df</span>
-<span id="cb18-10"><a href="#cb18-10"></a><span class="co">#&gt;    pupilNumber cost 2022 % totalFunding &lt;50% funding</span></span>
-<span id="cb18-11"><a href="#cb18-11"></a><span class="co">#&gt;  1           1      1234            0.4         TRUE</span></span>
-<span id="cb18-12"><a href="#cb18-12"></a><span class="co">#&gt;  2           2      1234            0.6        FALSE</span></span>
-<span id="cb18-13"><a href="#cb18-13"></a></span>
-<span id="cb18-14"><a href="#cb18-14"></a>messy_df <span class="sc">%&gt;%</span> </span>
-<span id="cb18-15"><a href="#cb18-15"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>()</span>
-<span id="cb18-16"><a href="#cb18-16"></a><span class="co">#&gt;    pupil_number cost_2022 percent_total_funding x50_percent_funding</span></span>
-<span id="cb18-17"><a href="#cb18-17"></a><span class="co">#&gt;  1            1      1234                   0.4                TRUE</span></span>
-<span id="cb18-18"><a href="#cb18-18"></a><span class="co">#&gt;  2            2      1234                   0.6               FALSE</span></span>
-<span id="cb18-19"><a href="#cb18-19"></a></span>
-<span id="cb18-20"><a href="#cb18-20"></a>messy_df <span class="sc">%&gt;%</span> </span>
-<span id="cb18-21"><a href="#cb18-21"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>(<span class="at">case =</span> <span class="st">"title"</span>, <span class="at">sep_out =</span> <span class="st">"_"</span>)</span>
-<span id="cb18-22"><a href="#cb18-22"></a><span class="co">#&gt;    Pupil_Number Cost_2022 Percent_Total_Funding X50_Percent_Funding</span></span>
-<span id="cb18-23"><a href="#cb18-23"></a><span class="co">#&gt;  1            1      1234                   0.4                TRUE</span></span>
-<span id="cb18-24"><a href="#cb18-24"></a><span class="co">#&gt;  2            2      1234                   0.6               FALSE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22" data-code-line-numbers="|10,16,22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>messy_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb22-2"><a href="#cb22-2"></a>  <span class="at">pupilNumber      =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, </span>
+<span id="cb22-3"><a href="#cb22-3"></a>  <span class="st">`</span><span class="at">cost 2022</span><span class="st">`</span>      <span class="ot">=</span> <span class="dv">1234</span>, </span>
+<span id="cb22-4"><a href="#cb22-4"></a>  <span class="st">`</span><span class="at">% totalFunding</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">0.4</span>, <span class="fl">0.6</span>),</span>
+<span id="cb22-5"><a href="#cb22-5"></a>  <span class="st">`</span><span class="at">&lt;50% funding</span><span class="st">`</span>   <span class="ot">=</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>), </span>
+<span id="cb22-6"><a href="#cb22-6"></a>  <span class="at">check.names =</span> <span class="cn">FALSE</span></span>
+<span id="cb22-7"><a href="#cb22-7"></a>)</span>
+<span id="cb22-8"><a href="#cb22-8"></a></span>
+<span id="cb22-9"><a href="#cb22-9"></a>messy_df</span>
+<span id="cb22-10"><a href="#cb22-10"></a><span class="co">#&gt;    pupilNumber cost 2022 % totalFunding &lt;50% funding</span></span>
+<span id="cb22-11"><a href="#cb22-11"></a><span class="co">#&gt;  1           1      1234            0.4         TRUE</span></span>
+<span id="cb22-12"><a href="#cb22-12"></a><span class="co">#&gt;  2           2      1234            0.6        FALSE</span></span>
+<span id="cb22-13"><a href="#cb22-13"></a></span>
+<span id="cb22-14"><a href="#cb22-14"></a>messy_df <span class="sc">%&gt;%</span> </span>
+<span id="cb22-15"><a href="#cb22-15"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>()</span>
+<span id="cb22-16"><a href="#cb22-16"></a><span class="co">#&gt;    pupil_number cost_2022 percent_total_funding x50_percent_funding</span></span>
+<span id="cb22-17"><a href="#cb22-17"></a><span class="co">#&gt;  1            1      1234                   0.4                TRUE</span></span>
+<span id="cb22-18"><a href="#cb22-18"></a><span class="co">#&gt;  2            2      1234                   0.6               FALSE</span></span>
+<span id="cb22-19"><a href="#cb22-19"></a></span>
+<span id="cb22-20"><a href="#cb22-20"></a>messy_df <span class="sc">%&gt;%</span> </span>
+<span id="cb22-21"><a href="#cb22-21"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>(<span class="at">case =</span> <span class="st">"title"</span>, <span class="at">sep_out =</span> <span class="st">"_"</span>)</span>
+<span id="cb22-22"><a href="#cb22-22"></a><span class="co">#&gt;    Pupil_Number Cost_2022 Percent_Total_Funding X50_Percent_Funding</span></span>
+<span id="cb22-23"><a href="#cb22-23"></a><span class="co">#&gt;  1            1      1234                   0.4                TRUE</span></span>
+<span id="cb22-24"><a href="#cb22-24"></a><span class="co">#&gt;  2            2      1234                   0.6               FALSE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -1018,22 +1133,22 @@
 <div class="code-with-filename-file">
 <pre><strong>messy-code.R</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#load packages</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse);<span class="fu">library</span>(lubridate)</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>data_raw<span class="ot">=</span><span class="fu">read_csv</span>(  <span class="st">"some_file.csv"</span>  )</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>data_clean<span class="ot">&lt;-</span>data_raw <span class="sc">%&gt;%</span></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Amount=</span>Amount<span class="sc">/</span><span class="fu">sum</span>(Amount),</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Combine date parts into single column</span></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">Date=</span><span class="fu">make_date</span>(Year,   Month,Day))<span class="sc">%&gt;%</span></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(</span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># other years aren't relevant to analysis</span></span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>          <span class="fu">year</span>(Date)<span class="sc">==</span><span class="dv">2020</span>,</span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>          Amount<span class="sc">&gt;</span> <span class="fl">0.1</span></span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot2</span>(data_clean,<span class="fu">aes</span>(Date,Amount))<span class="sc">+</span><span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#load packages</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse);<span class="fu">library</span>(lubridate)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>data_raw<span class="ot">=</span><span class="fu">read_csv</span>(  <span class="st">"some_file.csv"</span>  )</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>data_clean<span class="ot">&lt;-</span>data_raw <span class="sc">%&gt;%</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Amount=</span>Amount<span class="sc">/</span><span class="fu">sum</span>(Amount),</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Combine date parts into single column</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">Date=</span><span class="fu">make_date</span>(Year,   Month,Day))<span class="sc">%&gt;%</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># other years aren't relevant to analysis</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>          <span class="fu">year</span>(Date)<span class="sc">==</span><span class="dv">2020</span>,</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>          Amount<span class="sc">&gt;</span> <span class="fl">0.1</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot2</span>(data_clean,<span class="fu">aes</span>(Date,Amount))<span class="sc">+</span><span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div><div class="column" style="width:50%;">
@@ -1042,33 +1157,33 @@
 <div class="code-with-filename-file">
 <pre><strong>styler::style_file("messy-code.R")</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load packages</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>data_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"some_file.csv"</span>)</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>data_clean <span class="ot">&lt;-</span> data_raw <span class="sc">%&gt;%</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">Amount =</span> Amount <span class="sc">/</span> <span class="fu">sum</span>(Amount),</span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Combine date parts into single column</span></span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">Date =</span> <span class="fu">make_date</span>(Year, Month, Day)</span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># other years aren't relevant to analysis</span></span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">year</span>(Date) <span class="sc">==</span> <span class="dv">2020</span>,</span>
-<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>    Amount <span class="sc">&gt;</span> <span class="fl">0.1</span></span>
-<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot2</span>(data_clean, <span class="fu">aes</span>(Date, Amount)) <span class="sc">+</span> <span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load packages</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>data_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"some_file.csv"</span>)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>data_clean <span class="ot">&lt;-</span> data_raw <span class="sc">%&gt;%</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">Amount =</span> Amount <span class="sc">/</span> <span class="fu">sum</span>(Amount),</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Combine date parts into single column</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">Date =</span> <span class="fu">make_date</span>(Year, Month, Day)</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># other years aren't relevant to analysis</span></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">year</span>(Date) <span class="sc">==</span> <span class="dv">2020</span>,</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>    Amount <span class="sc">&gt;</span> <span class="fl">0.1</span></span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot2</span>(data_clean, <span class="fu">aes</span>(Date, Amount)) <span class="sc">+</span> <span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
 </div>
 </div>
 </section>
-<section id="lintrlint_file" class="slide level2">
-<h2><code>lintr::lint_file()</code></h2>
+<section id="lintrlint" class="slide level2">
+<h2><code>lintr::lint()</code></h2>
 <div style="font-size:70%">
 <p><a href="https://lintr.r-lib.org/">{lintr}</a> is similar to {styler}, but it tells you about issues instead of fixing them.</p>
 <ul>
@@ -1083,27 +1198,27 @@
 <div class="code-with-filename-file">
 <pre><strong>messy-code.R</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb21" data-code-line-numbers="true"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="co">#load packages</span></span>
-<span id="cb21-2"><a href="#cb21-2"></a><span class="fu">library</span>(tidyverse);<span class="fu">library</span>(lubridate)</span>
-<span id="cb21-3"><a href="#cb21-3"></a></span>
-<span id="cb21-4"><a href="#cb21-4"></a>data_raw<span class="ot">=</span><span class="fu">read_csv</span>(  <span class="st">"some_file.csv"</span>  )</span>
-<span id="cb21-5"><a href="#cb21-5"></a></span>
-<span id="cb21-6"><a href="#cb21-6"></a>data_clean<span class="ot">&lt;-</span>data_raw <span class="sc">%&gt;%</span></span>
-<span id="cb21-7"><a href="#cb21-7"></a>  <span class="fu">mutate</span>(<span class="at">Amount=</span>Amount<span class="sc">/</span><span class="fu">sum</span>(Amount),</span>
-<span id="cb21-8"><a href="#cb21-8"></a>    <span class="co">#Combine date parts into single column</span></span>
-<span id="cb21-9"><a href="#cb21-9"></a>    <span class="at">Date=</span><span class="fu">make_date</span>(Year,   Month,Day))<span class="sc">%&gt;%</span></span>
-<span id="cb21-10"><a href="#cb21-10"></a>    <span class="fu">filter</span>(</span>
-<span id="cb21-11"><a href="#cb21-11"></a>  <span class="co"># other years aren't relevant to analysis</span></span>
-<span id="cb21-12"><a href="#cb21-12"></a>          <span class="fu">year</span>(Date)<span class="sc">==</span><span class="dv">2020</span>,</span>
-<span id="cb21-13"><a href="#cb21-13"></a>          Amount<span class="sc">&gt;</span> <span class="fl">0.1</span></span>
-<span id="cb21-14"><a href="#cb21-14"></a>    )</span>
-<span id="cb21-15"><a href="#cb21-15"></a></span>
-<span id="cb21-16"><a href="#cb21-16"></a><span class="fu">ggplot2</span>(data_clean,<span class="fu">aes</span>(Date,Amount))<span class="sc">+</span><span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25" data-code-line-numbers="true"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="co">#load packages</span></span>
+<span id="cb25-2"><a href="#cb25-2"></a><span class="fu">library</span>(tidyverse);<span class="fu">library</span>(lubridate)</span>
+<span id="cb25-3"><a href="#cb25-3"></a></span>
+<span id="cb25-4"><a href="#cb25-4"></a>data_raw<span class="ot">=</span><span class="fu">read_csv</span>(  <span class="st">"some_file.csv"</span>  )</span>
+<span id="cb25-5"><a href="#cb25-5"></a></span>
+<span id="cb25-6"><a href="#cb25-6"></a>data_clean<span class="ot">&lt;-</span>data_raw <span class="sc">%&gt;%</span></span>
+<span id="cb25-7"><a href="#cb25-7"></a>  <span class="fu">mutate</span>(<span class="at">Amount=</span>Amount<span class="sc">/</span><span class="fu">sum</span>(Amount),</span>
+<span id="cb25-8"><a href="#cb25-8"></a>    <span class="co">#Combine date parts into single column</span></span>
+<span id="cb25-9"><a href="#cb25-9"></a>    <span class="at">Date=</span><span class="fu">make_date</span>(Year,   Month,Day))<span class="sc">%&gt;%</span></span>
+<span id="cb25-10"><a href="#cb25-10"></a>    <span class="fu">filter</span>(</span>
+<span id="cb25-11"><a href="#cb25-11"></a>  <span class="co"># other years aren't relevant to analysis</span></span>
+<span id="cb25-12"><a href="#cb25-12"></a>          <span class="fu">year</span>(Date)<span class="sc">==</span><span class="dv">2020</span>,</span>
+<span id="cb25-13"><a href="#cb25-13"></a>          Amount<span class="sc">&gt;</span> <span class="fl">0.1</span></span>
+<span id="cb25-14"><a href="#cb25-14"></a>    )</span>
+<span id="cb25-15"><a href="#cb25-15"></a></span>
+<span id="cb25-16"><a href="#cb25-16"></a><span class="fu">ggplot2</span>(data_clean,<span class="fu">aes</span>(Date,Amount))<span class="sc">+</span><span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>lintr<span class="sc">::</span><span class="fu">lint_file</span>(<span class="st">"messy-code.R"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>lintr<span class="sc">::</span><span class="fu">lint</span>(<span class="st">"messy-code.R"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><img data-src="lintr-rstudio-screenshot.png"></p>
 </div>
@@ -1154,7 +1269,7 @@
 <td>Inserts template function documentation</td>
 </tr>
 <tr class="even">
-<td><code>Ctrl + click/drag</code></td>
+<td><code>Alt + click/drag</code></td>
 <td>Activate multiline cursor</td>
 </tr>
 </tbody>
@@ -1169,12 +1284,18 @@
 </section>
 <section id="resources-1" class="slide level2">
 <h2>Resources</h2>
+<div style="font-size:70%">
 <ul>
 <li><p>The Tidyverse style guide: <a href="https://style.tidyverse.org/" class="uri">https://style.tidyverse.org/</a></p></li>
 <li><p>The Tidyverse design guide: <a href="https://design.tidyverse.org/" class="uri">https://design.tidyverse.org/</a></p></li>
+<li><p>Workflow: code style (R for Data Science): <a href="https://r4ds.hadley.nz/workflow-style.html" class="uri">https://r4ds.hadley.nz/workflow-style.html</a></p></li>
 <li><p>The {styler} package: <a href="https://styler.r-lib.org/" class="uri">https://styler.r-lib.org/</a></p></li>
 <li><p>The {lintr} package: <a href="https://lintr.r-lib.org/" class="uri">https://lintr.r-lib.org/</a></p></li>
+<li><p>The {usethis} package for project/package setup: <a href="https://usethis.r-lib.org/" class="uri">https://usethis.r-lib.org/</a></p></li>
+<li><p>The {devtools} package for package development: <a href="https://devtools.r-lib.org/" class="uri">https://devtools.r-lib.org/</a></p></li>
+<li><p>The {testthat} package for unit testing: <a href="https://testthat.r-lib.org/" class="uri">https://testthat.r-lib.org/</a></p></li>
 </ul>
+</div>
 <div class="footer footer-default">
 
 </div>
