@@ -227,8 +227,8 @@ IRIS_SUMMARY <- summary(iris)
 ::: {.incremental style="font-size:70%"}
 R has rules for names:
 
--   They must only include letters and numbers, and must start with a
-    letter
+-   They must only include letters and numbers `_` and `.`, and must
+    start with a letter or `.`
 
 -   Other names must be surrounded by backticks:
 
