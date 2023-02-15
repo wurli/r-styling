@@ -1,7 +1,9 @@
 project:
-  title: "coffee-and-coding-styling-r-code"
+  title: "Styling R Code"
   type: "website"
   output-dir: docs
+  render:
+    - "!example-proj/reports/analysis-report.qmd"
 
 editor: visual
 

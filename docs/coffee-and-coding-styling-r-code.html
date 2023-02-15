@@ -9,7 +9,7 @@
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.2.269">
 
-  <title>coffee-and-coding-styling-r-code - Styling R Code</title>
+  <title>Styling R Code</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -426,6 +426,19 @@
 </blockquote>
 <p>-<em>Introduction to the <a href="https://style.tidyverse.org/">Tidyverse Style Guide</a></em></p>
 </div>
+<aside class="notes">
+<p>Here’s a quote about styling from the Tidyverse Style Guide. This really sums it up - you get by without styling like you can get by without grammar. And if that’s how you’re getting by currently, you might not necessarily see the benefit of changing. But as you gradually improve the way you style your code, you’ll find that it does make a huge improvement to clarity.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="some-specific-benefits" class="slide level2">
 <h2>Some specific benefits</h2>
@@ -483,7 +496,19 @@
 <section>
 <section id="some-specific-styling-tips" class="title-slide slide level1 center">
 <h1>02. Some specific styling tips</h1>
-
+<aside class="notes">
+<p>I’m going to talk through some specific styling points - in my opinion, these are the ones which make the biggest difference to your code without being too tricky to get your head around. By the way - if anyone on this call has a different way of doing things to what I’ve written in the next slides, please jump in and let me know!</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="naming-things" class="slide level2">
 <h2>Naming things</h2>
@@ -535,6 +560,21 @@
 <li class="fragment"><p>Names for functions should be verb-like, e.g.&nbsp;<code>filter()</code>, <code>standardise_names()</code> , <code>extract_coefficients()</code> etc</p></li>
 </ul>
 </div>
+<aside class="notes">
+<p>In the example code <code>table_totalcost</code> is bad for two reasons - it signals the type of object and it squashes two words together, which should be separated by an underscore</p>
+<p><code>model_for_use_later_on</code> actually is just too long, and actually there isn’t much information in the name, because presumably every object you create in your code is ‘for use later on’. Just calling it <code>cost_model</code> is a better option.</p>
+<p><code>read_data_func</code> is a bad name because it signals the type of object. When people aren’t used to creating functions you actually tend to see names like these quite a lot. But it’s much better to just signal that this object is a function by making its name verb-like. So, <code>read_data()</code> is fine, and <code>import_data()</code> or <code>import_files()</code> would also be good.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="name-case" class="slide level2">
 <h2>Name <em>case</em></h2>
@@ -566,7 +606,9 @@
 </div>
 <aside class="notes">
 <ul>
-<li>Exceptions to the <code>lower_snake_case</code> rule? Personally, no. I find, even with acronyms etc, things are much simpler if you follow this rule religiously.</li>
+<li><p>Firstly, I want to put a poll in the chat. If you were writing some code, which of these names would you be most likely to go with?</p></li>
+<li><p>Mention {DBI}, ggproto etc about camelCase</p></li>
+<li><p>Exceptions to the <code>lower_snake_case</code> rule? Personally, no. I find, even with acronyms etc, things are much simpler if you follow this rule religiously.</p></li>
 </ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -956,7 +998,7 @@
 <span id="cb17-8"><a href="#cb17-8"></a>    <span class="at">c =</span> (c <span class="sc">-</span> <span class="fu">min</span>(c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> </span>
 <span id="cb17-9"><a href="#cb17-9"></a>      (<span class="fu">max</span>(c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
 <span id="cb17-10"><a href="#cb17-10"></a>    <span class="at">d =</span> (d <span class="sc">-</span> <span class="fu">min</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">/</span> </span>
-<span id="cb17-11"><a href="#cb17-11"></a>      (<span class="fu">max</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb17-11"><a href="#cb17-11"></a>      (<span class="fu">max</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">min</span>(d, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
 <span id="cb17-12"><a href="#cb17-12"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
@@ -1038,7 +1080,7 @@
 <h2>Projects and filepaths</h2>
 <div style="font-size:70%">
 <div class="columns">
-<div class="column" style="width:70%;">
+<div class="column" style="width:65%;">
 <ul>
 <li class="fragment"><p>Create a new RStudio project for each new piece of work</p></li>
 <li class="fragment"><p>A project is defined by the presence of a file with the <code>.Rproj</code> extension. This tells RStudio that everything in the folder is part of the project.</p>
@@ -1049,7 +1091,7 @@
 <li class="fragment"><p>Write a <code>README.md</code> file for each project explaining its purpose and steps to get started using it</p></li>
 <li class="fragment"><p>For long-term projects, or ones which are on hold, use <a href="https://rstudio.github.io/renv/index.html">{renv}</a> to keep track of dependencies</p></li>
 </ul>
-</div><div class="column fragment" style="width:30%;">
+</div><div class="column fragment" style="width:35%;">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>fs<span class="sc">::</span><span class="fu">dir_tree</span>(<span class="st">"example-proj"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">

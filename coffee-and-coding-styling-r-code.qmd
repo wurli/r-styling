@@ -46,6 +46,15 @@ highlight-style: arrow
 Guide](https://style.tidyverse.org/)*
 :::
 
+::: notes
+Here's a quote about styling from the Tidyverse Style Guide. This really
+sums it up - you get by without styling like you can get by without
+grammar. And if that's how you're getting by currently, you might not
+necessarily see the benefit of changing. But as you gradually improve
+the way you style your code, you'll find that it does make a huge
+improvement to clarity.
+:::
+
 ## Some specific benefits
 
 ::: {.incremental style="\"font-size:70%"}
@@ -93,6 +102,14 @@ Guide](https://style.tidyverse.org/)*
 :::
 
 # 02. Some specific styling tips
+
+::: notes
+I'm going to talk through some specific styling points - in my opinion,
+these are the ones which make the biggest difference to your code
+without being too tricky to get your head around. By the way - if anyone
+on this call has a different way of doing things to what I've written in
+the next slides, please jump in and let me know!
+:::
 
 ## Naming things
 
@@ -145,6 +162,24 @@ read_data <- function(path) {
     `standardise_names()` , `extract_coefficients()` etc
 :::
 
+::: notes
+In the example code `table_totalcost` is bad for two reasons - it
+signals the type of object and it squashes two words together, which
+should be separated by an underscore
+
+`model_for_use_later_on` actually is just too long, and actually there
+isn't much information in the name, because presumably every object you
+create in your code is 'for use later on'. Just calling it `cost_model`
+is a better option.
+
+`read_data_func` is a bad name because it signals the type of object.
+When people aren't used to creating functions you actually tend to see
+names like these quite a lot. But it's much better to just signal that
+this object is a function by making its name verb-like. So,
+`read_data()` is fine, and `import_data()` or `import_files()` would
+also be good.
+:::
+
 ## Name *case*
 
 ::: {style="font-size:70%"}
@@ -177,6 +212,11 @@ IRIS_SUMMARY <- summary(iris)
 :::
 
 ::: notes
+-   Firstly, I want to put a poll in the chat. If you were writing some
+    code, which of these names would you be most likely to go with?
+
+-   Mention {DBI}, ggproto etc about camelCase
+
 -   Exceptions to the `lower_snake_case` rule? Personally, no. I find,
     even with acronyms etc, things are much simpler if you follow this
     rule religiously.
@@ -584,7 +624,7 @@ df %>%
     c = (c - min(c, na.rm = TRUE)) / 
       (max(c, na.rm = TRUE) - min(c, na.rm = TRUE)),
     d = (d - min(d, na.rm = TRUE)) / 
-      (max(d, na.rm = TRUE) - min(d, na.rm = TRUE)),
+      (max(d, na.rm = TRUE) - min(d, na.rm = TRUE))
   )
 ```
 :::
@@ -686,7 +726,7 @@ df %>%
 
 ::: {.incremental style="font-size:70%"}
 ::: columns
-::: {.column width="70%"}
+::: {.column width="65%"}
 -   Create a new RStudio project for each new piece of work
 
 -   A project is defined by the presence of a file with the `.Rproj`
@@ -707,7 +747,7 @@ df %>%
     dependencies
 :::
 
-::: {.column .fragment width="30%"}
+::: {.column .fragment width="35%"}
 ```{r}
 #| collapse: false
 #| comment: ""
